@@ -1,0 +1,72 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+
+
+Color colorOne = Colors.red;
+Color colorTwo = Colors.red[300];
+Color colorThree = Colors.red[100];
+Color colorTheme = new Color(0xff4c3f54);
+Color colorThemeFent = new Color(0xff4c3f54).withOpacity(0.7);
+Color colorText = new Color(0xffffff0);
+Color colorError = Colors.red;
+Color colorSuccess = Colors.green;
+Color colorWarning = Colors.amber;
+Color color_blue = Colors.blue;
+Color color_darkblue = Colors.blue;
+Color green_btn = new Color(0xff3BA449);
+Color green_btn2 = new Color(0xff1A6905);
+Color green_light = new Color(0xff60B56C);
+Color green_light2 = new Color(0xffEBF6EC);
+Color light_red = new Color(0xffFAE9E9);
+Color light_yellow = new Color(0xffF6F7E8);
+Color light_darkyellow = new Color(0xffF8CF0A);
+Color pedingcolor = new Color(0xffAAAE21);
+Color dark_blue = new Color(0xff2529EB);
+Color background_all = new Color(0xffF5F8FA);
+Color colorDarkTheme =new Color(0xff2196F3);
+Color colorDarkTheme_tab = new Color(0xff103C86);
+Color colorWhite = Colors.white;
+Color colorBlack = Colors.black;
+Color colorgray = new Color(0xffD7D7D7);
+
+Color light_blue = new Color(0xffE6F0FF);
+Color light_blue3 = new Color(0xff2957a4);
+Color orange = new Color(0xffFFA800);
+Color light_blue2 = new Color(0xffECF1FA);
+Color blue = new Color(0xff034EA0);
+Color blue2 = new Color(0xff2482B4);
+
+Color transperntt = new Color(0xff60DAA8);
+Color whitetranspernt = new Color(0xff00FFFFFF);
+Color tickcolor = new Color(0xff60DAA8);
+Color bluebutton = new Color(0xff2482B4);
+Color yellowlight = new Color(0xffFFFF99);
+Color urgentcolor = new Color(0xff2482B4);
+Color new_confirmedcolor = new Color(0xff60DAA8);
+Color expiredcolor = new Color(0xffFB7B30);
+Color coloractiveadbottom = new Color(0xffFC5E5E);
+Color coloryourbidsbottom = new Color(0xff089FED);
+Color colorconfirmbidbottom = new Color(0xffB755E0);
+Color colorinshipmentbottom= new Color(0xff51D04B);
+Color colortimer= new Color(0xff7C7C7C);
+Color coloryourbid= new Color(0xff089FED);
+Color colorinshipment= new Color(0xffB1AB07);
+Color colorcompleted= new Color(0xff25AA5E);
+Color colorcancelled= new Color(0xffF33F3F);
+Color colorsuccess= new Color(0xff75C07E);
+Color shadowColor = new Color(0xff1f1f1f);
+Color onInfo = new Color(0xffffffff);
+Color onWarning = new Color(0xffffffff);
+Color onSuccess = new Color(0xffffffff);
+Color onError = new Color(0xffffffff);
+Color purplecolor = new Color(0xff3d63ff);
+Color shimmerHighlightColor = new Color(0xFFE0E0E0);
+Color pinkcolor = new Color(0xFFFF69B4);
+Color whitecolor = new Color(0xffffffff);
+Color blackcolor = Colors.black;
+Color yellowcolor = new Color(0xffFFF4B9);
+Color lightpink = new Color(0xffffe9ec);
+Color pink2 = new Color(0xffFEC3C3);
+Color green = new Color(0xff10FF68);
+
+

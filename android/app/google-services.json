@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "44978089797",
+    "firebase_url": "https://possible-aspect-277521.firebaseio.com",
+    "project_id": "possible-aspect-277521",
+    "storage_bucket": "possible-aspect-277521.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44978089797:android:88c394e5fda56c2627582c",
+        "android_client_info": {
+          "package_name": "com.appacore.bizitme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44978089797-ie9qs95t6u4i5dvfen9nu6p7fg8potlu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4w49TrC7O1KG5L0ehjX591obWz9ZrT3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44978089797-ie9qs95t6u4i5dvfen9nu6p7fg8potlu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "44978089797-gjagjv64shing358pi9oj14d8kash286.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appacore.draggo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44978089797:android:a33d7751741b2f0127582c",
+        "android_client_info": {
+          "package_name": "com.appacore.draggo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44978089797-ie9qs95t6u4i5dvfen9nu6p7fg8potlu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4w49TrC7O1KG5L0ehjX591obWz9ZrT3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44978089797-ie9qs95t6u4i5dvfen9nu6p7fg8potlu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "44978089797-gjagjv64shing358pi9oj14d8kash286.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appacore.draggo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
