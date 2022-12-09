@@ -1,6 +1,5 @@
 import 'package:bizitme/Models/Bizitme.dart';
 import 'package:bizitme/Models/appConstants.dart';
-import 'package:bizitme/Screens/BankAccountPage.dart';
 import 'package:bizitme/Screens/CancellationPolicy.dart';
 import 'package:bizitme/Screens/CancellationPolicyPage.dart';
 import 'package:bizitme/Screens/MainStartPage.dart';

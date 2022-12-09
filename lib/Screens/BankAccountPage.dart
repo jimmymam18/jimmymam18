@@ -27,7 +27,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:stripe_payment/stripe_payment.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -81,7 +81,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
 
   int _selectedDrawerIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  Token _paymentToken;
+  // Token _paymentToken;
   String strtokentid = "";
 
   var _loadImage;
@@ -177,7 +177,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
     getProfileData();
     super.initState();
     checkCardDetails();
-    StripePayment.setOptions(StripeOptions(publishableKey: TestKey));
+    // StripePayment.setOptions(StripeOptions(publishableKey: TestKey));
     getDeviceToken();
 
     updateTokenInAllPost();
@@ -291,6 +291,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
               backgroundColor: Colors.white,
               key: _scaffoldKey,
               body: DoubleBackToCloseApp(
+           /*  
                 child: Container(
                   margin: const EdgeInsets.only(
                       top: 5, left: 5, right: 5, bottom: 5),
@@ -1458,6 +1459,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
                       )
                   ),
                 ),
+                */
                 snackBar: const SnackBar(
                   content: Text('Tap back again to leave'),
                 ),
@@ -1562,28 +1564,28 @@ class _BankAccountPageState extends State<BankAccountPage> {
 
 
 
-    final CreditCard testCard = CreditCard(
-      name: txtCardHoldername.text,
-      number: strCardnumber,
-      expMonth: int.parse(txtCardExpiryMonth.text),
-      expYear: int.parse(txtCardYear.text),
-      cvc: txtCardCVV.text,
-
-    );
-
-    StripePayment.createTokenWithCard(
-      testCard,
-    ).then((token) {
-      _paymentToken = token;
-      strtokentid = token.tokenId;
-
-      setState(() {});
-
-      print("strtokentid" + strtokentid);
-      print("_paymentToken" + _paymentToken.toString());
-      BookingApi();
-
-    }).catchError(setError);
+    // final CreditCard testCard = CreditCard(
+    //   name: txtCardHoldername.text,
+    //   number: strCardnumber,
+    //   expMonth: int.parse(txtCardExpiryMonth.text),
+    //   expYear: int.parse(txtCardYear.text),
+    //   cvc: txtCardCVV.text,
+    //
+    // );
+    //
+    // StripePayment.createTokenWithCard(
+    //   testCard,
+    // ).then((token) {
+    //   _paymentToken = token;
+    //   strtokentid = token.tokenId;
+    //
+    //   setState(() {});
+    //
+    //   print("strtokentid" + strtokentid);
+    //   print("_paymentToken" + _paymentToken.toString());
+    //   BookingApi();
+    //
+    // }).catchError(setError);
   }
 
   void setError(dynamic error) {
@@ -1859,116 +1861,116 @@ class _BankAccountPageState extends State<BankAccountPage> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.80,
                     //  height: MediaQuery.of(context).size.height* 0.40,
-                    child: Card(
-                      elevation: 5.0,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.white70, width: 1),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Wrap(
-                        children: <Widget>[
-                          Center(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(
-                                  MediaQuery.of(context).size.height * 0.01,
-                                  MediaQuery.of(context).size.height * 0.01,
-                                  MediaQuery.of(context).size.height * 0.01,
-                                  MediaQuery.of(context).size.height * 0.01),
-                              child: Column(
-                                children: <Widget>[
-                                  new SizedBox(
-                                    height: 10,
-                                  ),
-                                  Image.asset(
-                                    "assets/images/payment_sucess.png",
-                                    scale: 6,
-                                  ),
-                                  new SizedBox(
-                                    height: 05,
-                                  ),
-                                  Text(
-                                    'Successful',
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Lato',
-                                      color: Color((0xff44536a)),
-                                      fontSize: 18,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  new SizedBox(
-                                    height: 15,
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        left:
-                                        MediaQuery.of(context).size.height *
-                                            0.02,
-                                        right:
-                                        MediaQuery.of(context).size.height *
-                                            0.02),
-                                    child: Text(
-                                      'Payment Completed Successfully',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Lato',
-                                        color: Color((0xff44536a)),
-                                        fontSize: 15,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ),
-                                  new SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02,
-                                  ),
-                                  RaisedButton(
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                        new BorderRadius.circular(128.0)),
-                                    textColor: Colors.white,
-                                    color: Color((0xffFab01b)),
-                                    padding: EdgeInsets.fromLTRB(
-                                        MediaQuery.of(context).size.height *
-                                            0.05,
-                                        MediaQuery.of(context).size.height *
-                                            0.00,
-                                        MediaQuery.of(context).size.height *
-                                            0.05,
-                                        MediaQuery.of(context).size.height *
-                                            0.00),
-                                    child: Text(
-                                      'OK',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        color: Color((0xff44536a)),
-                                        fontSize: 1.8 *
-                                            MediaQuery.of(context).size.height *
-                                            0.01,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        Navigator.pop(dialog_context, true);
-                                        Navigator.pop(context, true);
-                                        // Navigator.pop(context);
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    // child: Card(
+                    //   elevation: 5.0,
+                    //   shape: RoundedRectangleBorder(
+                    //     side: BorderSide(color: Colors.white70, width: 1),
+                    //     borderRadius: BorderRadius.circular(15),
+                    //   ),
+                    //   child: Wrap(
+                    //     children: <Widget>[
+                    //       Center(
+                    //         child: Container(
+                    //           padding: EdgeInsets.fromLTRB(
+                    //               MediaQuery.of(context).size.height * 0.01,
+                    //               MediaQuery.of(context).size.height * 0.01,
+                    //               MediaQuery.of(context).size.height * 0.01,
+                    //               MediaQuery.of(context).size.height * 0.01),
+                    //           child: Column(
+                    //             children: <Widget>[
+                    //               new SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //               Image.asset(
+                    //                 "assets/images/payment_sucess.png",
+                    //                 scale: 6,
+                    //               ),
+                    //               new SizedBox(
+                    //                 height: 05,
+                    //               ),
+                    //               Text(
+                    //                 'Successful',
+                    //                 overflow: TextOverflow.ellipsis,
+                    //                 maxLines: 1,
+                    //                 textAlign: TextAlign.center,
+                    //                 style: TextStyle(
+                    //                   fontFamily: 'Lato',
+                    //                   color: Color((0xff44536a)),
+                    //                   fontSize: 18,
+                    //                   fontStyle: FontStyle.normal,
+                    //                   fontWeight: FontWeight.bold,
+                    //                 ),
+                    //               ),
+                    //               new SizedBox(
+                    //                 height: 15,
+                    //               ),
+                    //               Container(
+                    //                 padding: EdgeInsets.only(
+                    //                     left:
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.02,
+                    //                     right:
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.02),
+                    //                 child: Text(
+                    //                   'Payment Completed Successfully',
+                    //                   textAlign: TextAlign.center,
+                    //                   style: TextStyle(
+                    //                     fontFamily: 'Lato',
+                    //                     color: Color((0xff44536a)),
+                    //                     fontSize: 15,
+                    //                     fontStyle: FontStyle.normal,
+                    //                     fontWeight: FontWeight.normal,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               new SizedBox(
+                    //                 height: MediaQuery.of(context).size.height *
+                    //                     0.02,
+                    //               ),
+                    //               RaisedButton(
+                    //                 shape: new RoundedRectangleBorder(
+                    //                     borderRadius:
+                    //                     new BorderRadius.circular(128.0)),
+                    //                 textColor: Colors.white,
+                    //                 color: Color((0xffFab01b)),
+                    //                 padding: EdgeInsets.fromLTRB(
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.05,
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.00,
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.05,
+                    //                     MediaQuery.of(context).size.height *
+                    //                         0.00),
+                    //                 child: Text(
+                    //                   'OK',
+                    //                   textAlign: TextAlign.center,
+                    //                   style: TextStyle(
+                    //                     fontFamily: 'Montserrat',
+                    //                     color: Color((0xff44536a)),
+                    //                     fontSize: 1.8 *
+                    //                         MediaQuery.of(context).size.height *
+                    //                         0.01,
+                    //                     fontStyle: FontStyle.normal,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //                 ),
+                    //                 onPressed: () {
+                    //                   setState(() {
+                    //                     Navigator.pop(dialog_context, true);
+                    //                     Navigator.pop(context, true);
+                    //                     // Navigator.pop(context);
+                    //                   });
+                    //                 },
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                   ),
                 ],
               ));

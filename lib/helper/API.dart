@@ -9,4 +9,6 @@ class API{
   static const String cancellation_refund_policy = baseUrl + "cancellation_refund_policy/";
   static const String terms_and_condition = baseUrl + "terms_and_condition/";
 
+  static const String stripePublishableKey = 'pk_test_51LHr4UI0Jl0TyufYNLhbmQShj2vhewUmVOsdTQQlC1vbsx7C5BxDJURoztL3YinNTwivmkuR1MUcMqPiNCVS7ceO00Jky7DbcI'; //test key
+
 }

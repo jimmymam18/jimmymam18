@@ -22,13 +22,16 @@ import 'package:bizitme/Screens/signUpPage.dart';
 import 'package:bizitme/Screens/viewProfilePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/LoginOtp.dart';
+import 'helper/API.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Stripe.publishableKey = API.stripePublishableKey;
   runApp(MyApp());
 }
 

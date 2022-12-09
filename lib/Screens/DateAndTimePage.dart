@@ -1010,7 +1010,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                         );
                       }
                      else{
-                        getDaysInBeteween(startDate, startDate);
+                     /*   getDaysInBeteween(startDate, startDate);
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
                             BankAccountPage(title: widget.title, description: widget.description,priceText: widget.priceText,documentId: widget.documentId,
                                 location: widget.location, priceDay: widget.priceDay, priceHour: widget.priceHour, priceWeek: widget.priceWeek,categoryName:widget.categoryName, names: widget.names,
@@ -1018,7 +1018,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                                 fromDate:fromDate, toDate:toDate,showStartTime:showStartTime, showEndTime:showEndTime, stringDays:stringDays,
                                 stripeAccountLink:widget.stripeAccountLink, noOfHour:noOfHour, calculatedAmount:calculatedAmount,
                                 receiverDeviceToken:widget.receiverDeviceToken,documentIdAdd:widget.documentIdAdd,userId:widget.userId, subCategories:widget.subCategories)));
-                      }
+                    */  }
                     }else{
                       if(startDate.isAfter(endDate)){
                         Fluttertoast.showToast(
@@ -1071,7 +1071,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                             fontSize: 14.0
                         );
                       }else{
-                        getDaysInBeteween(startDate, endDate);
+                     /*   getDaysInBeteween(startDate, endDate);
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
                             BankAccountPage(title: widget.title, description: widget.description,priceText: widget.priceText,documentId: widget.documentId,
                                 location: widget.location, priceDay: widget.priceDay, priceHour: widget.priceHour, priceWeek: widget.priceWeek,categoryName:widget.categoryName, names: widget.names,
@@ -1079,7 +1079,7 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                                 fromDate:fromDate, toDate:toDate,showStartTime:showStartTime, showEndTime:showEndTime, stringDays:stringDays,
                                 stripeAccountLink:widget.stripeAccountLink, noOfHour:noOfHour, calculatedAmount: calculatedAmount,
                                 deviceToken:widget.deviceToken, documentIdAdd:widget.documentIdAdd)));
-                      }
+                      */}
                     }
 
                   },

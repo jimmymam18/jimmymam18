@@ -6,7 +6,7 @@ import 'package:bizitme/Models/appConstants.dart';
 import 'package:bizitme/Models/cloud_storage_service.dart';
 import 'package:bizitme/Models/custom_progress_dialog.dart';
 import 'package:bizitme/Screens/AddPostPage.dart';
-import 'package:bizitme/Screens/BankAccountPage.dart';
+
 import 'package:bizitme/Screens/MyPostPage.dart';
 import 'package:bizitme/Screens/UploadPhotosNext.dart';
 import 'package:bizitme/Screens/personalinfoPage.dart';

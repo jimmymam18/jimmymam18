@@ -4,11 +4,13 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bizitme/Screens/LoginOtp.dart';
 
 import '../global.dart';
+import 'guestHomePage.dart';
 import 'loginPage.dart';
 
 class MainStartPage extends StatefulWidget {
@@ -29,7 +31,7 @@ class _MainStartPageState extends State<MainStartPage>{
   void initState() {
     setInitialLocation();
     super.initState();
-  }
+   }
 
   void setInitialLocation() async {
 
@@ -76,8 +78,9 @@ class _MainStartPageState extends State<MainStartPage>{
                           padding: const EdgeInsets.only(top: 40.0),
                           child: MaterialButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, LoginPage.routeName);
-                         //   Navigator.push(context,  MaterialPageRoute(builder: (context) =>LoginOtp()));
+                            // Navigator.pushReplacementNamed(context, GuestHomePage.routeName);
+                            stripe_SDK();
+                            // Navigator.pushReplacementNamed(context, LoginPage.routeName);
                           },
                           child: Text(
                             'Already a member?',
@@ -175,4 +178,55 @@ class _MainStartPageState extends State<MainStartPage>{
     ),
     );
   }
+
+
+  Future<void> stripe_SDK()
+  async {
+
+    try {
+
+      BillingDetails billingDetails = BillingDetails(
+          email: 'sonaligirde11@gmail.com'
+      );
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+            // billingDetails: billingDetails,
+            paymentIntentClientSecret:" _getXController.stripeClientSecretKey",
+            customerId: "_getXController.stripeCustomerId",
+            customerEphemeralKeySecret: "_getXController.stripeEphemeralKeySecret",
+            style: ThemeMode.dark,
+            merchantDisplayName: 'Doorap Stripe Test',
+          ));
+
+      displayPaymentSheet(billingDetails);
+
+    } catch (e) {
+      print('makePayment Exception : ' + e.toString());
+    }
+  }
+
+  bool isPaymentSucceeded=false;
+
+  displayPaymentSheet(BillingDetails billingDetails) async {
+
+    try{
+      await Stripe.instance.presentPaymentSheet();
+      setState(() {});
+
+      PaymentIntent paymentIntent = await Stripe.instance.retrievePaymentIntent("stripeClientSecretKey");
+
+      print( 'PAYMENT_INTENT _STATUS' + paymentIntent.status.toString());
+      print( 'PAYMENT_INTENT _AMOUNT' + paymentIntent.amount.toString());
+
+      if(paymentIntent.status == PaymentIntentsStatus.Succeeded){
+       isPaymentSucceeded = true;
+        setState(() {
+        });
+      }
+    }catch(exception){
+      print('displayPaymentSheet Exception  ' + exception.toString());
+    }
+
+  }
+
 }

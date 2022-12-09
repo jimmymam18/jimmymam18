@@ -77,7 +77,8 @@ dependencies:
   geocoder: ^0.2.1
 
 #  stripe_payment: ^1.1.4
-#  flutter_stripe: ^1.0.1
+
+  flutter_stripe: ^1.0.1
 
 
   google_places_picker: ^3.0.2
@@ -92,7 +93,7 @@ dependencies:
   google_api_headers: ^1.1.0
 
 
-  stripe_payment: ^1.0.10
+#  stripe_payment: ^1.1.4
 
 
 dependency_overrides:

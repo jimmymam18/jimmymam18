@@ -1,6 +1,5 @@
 package com.appacore.bizitme
 
-import io.flutter.embedding.android.FlutterActivity
 
 import io.flutter.app.FlutterApplication
 
@@ -16,7 +15,11 @@ import android.os.Build
 import androidx.annotation.NonNull
 
 
-class MainActivity: FlutterActivity(){
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
+
+
+class MainActivity: FlutterFragmentActivity(){
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
