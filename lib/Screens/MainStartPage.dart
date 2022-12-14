@@ -1,5 +1,10 @@
+import 'package:bizitme/Models/OkDialog.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailRequest.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailResponse.dart';
 import 'package:bizitme/Models/appConstants.dart';
+import 'package:bizitme/Models/custom_progress_dialog.dart';
 import 'package:bizitme/Screens/signUpPage.dart';
+import 'package:bizitme/repository/common_repository.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -79,7 +84,7 @@ class _MainStartPageState extends State<MainStartPage>{
                           child: MaterialButton(
                           onPressed: () {
                             // Navigator.pushReplacementNamed(context, GuestHomePage.routeName);
-                            stripe_SDK();
+                            GetStripeDetail();
                             // Navigator.pushReplacementNamed(context, LoginPage.routeName);
                           },
                           child: Text(
@@ -180,22 +185,81 @@ class _MainStartPageState extends State<MainStartPage>{
   }
 
 
+
+  ProgressDialog _progressDialog = ProgressDialog();
+  bool progressDialog = false;
+
+  String paymentIntentClientSecret="";
+  String customerId="";
+  String customerEphemeralKeySecret="";
+
+
+  void GetStripeDetail() async {
+
+
+    if (progressDialog == false) {
+      progressDialog = true;
+      _progressDialog.showProgressDialog(context,
+          textToBeDisplayed: 'loading...', dismissAfter: null);
+    }
+
+    StripeDetailRequest otpRequest = new StripeDetailRequest();
+    otpRequest.user_id = "21";
+    otpRequest.amount = "5";
+    otpRequest.email = "accbc@gmail.com";
+
+    StripeDetailResponse otpResponse = await stripe_detail(otpRequest);
+    _progressDialog.dismissProgressDialog(context);
+    progressDialog = false;
+
+    if (otpResponse == null) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context1) => OKDialogBox(
+            title: 'Something went wrong, Please try again',
+            description: "",
+            my_context: context,
+          ));
+    } else if (otpResponse.status == "1") {
+      print("res  SUCCESS"+otpResponse.msg);
+
+      paymentIntentClientSecret=otpResponse.payload.paymentIntentId;
+      customerId=otpResponse.payload.customerId;
+      customerEphemeralKeySecret=otpResponse.payload.ephemeralKey;
+
+      stripe_SDK();
+
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context1) => OKDialogBox(
+            // title: '' + responseData.msg,
+            title: otpResponse.msg,
+            description: "",
+            my_context: context,
+          ));
+    }
+  }
+
+
+
   Future<void> stripe_SDK()
   async {
 
     try {
 
+
       BillingDetails billingDetails = BillingDetails(
-          email: 'sonaligirde11@gmail.com'
+          email: 'test@gmail.com'
       );
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             // billingDetails: billingDetails,
-            paymentIntentClientSecret:" _getXController.stripeClientSecretKey",
-            customerId: "_getXController.stripeCustomerId",
-            customerEphemeralKeySecret: "_getXController.stripeEphemeralKeySecret",
+            paymentIntentClientSecret:paymentIntentClientSecret,
+            customerId: customerId,
+            customerEphemeralKeySecret: customerEphemeralKeySecret,
             style: ThemeMode.dark,
-            merchantDisplayName: 'Doorap Stripe Test',
+            merchantDisplayName: 'Bizitme Stripe',
           ));
 
       displayPaymentSheet(billingDetails);

@@ -1,5 +1,8 @@
 class API{
 
+
+  static const String stripePublishableKey = 'pk_test_8rYgqziVzih8wJZgo1sZhBh300JNObJeax'; //test key
+
   // static const String baseUrl = "http://13.59.162.217:8000/";
   static const String baseUrl = "https://bizit.me/";
 
@@ -9,6 +12,8 @@ class API{
   static const String cancellation_refund_policy = baseUrl + "cancellation_refund_policy/";
   static const String terms_and_condition = baseUrl + "terms_and_condition/";
 
-  static const String stripePublishableKey = 'pk_test_51LHr4UI0Jl0TyufYNLhbmQShj2vhewUmVOsdTQQlC1vbsx7C5BxDJURoztL3YinNTwivmkuR1MUcMqPiNCVS7ceO00Jky7DbcI'; //test key
+  static const String Stripe_payment = baseUrl + "Stripe_payment/";
+
+  // static const String stripePublishableKey = 'pk_live_c5E5SMdZOShtWacsFRzf5YIN00lVDBJtaL'; //test key
 
 }

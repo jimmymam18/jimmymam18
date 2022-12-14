@@ -5,6 +5,8 @@ import 'package:bizitme/Models/CancelBookingRequest.dart';
 import 'package:bizitme/Models/CancelBookingResponse.dart';
 import 'package:bizitme/Models/OtpRequest.dart';
 import 'package:bizitme/Models/OtpResponse.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailRequest.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailResponse.dart';
 import 'package:bizitme/helper/API.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,6 +73,29 @@ Future<OtpResponse> otpRef(OtpRequest requestModel) async {
   print("response "+requestModel.toJson().toString());
   if (response.statusCode == 200) {
     responseModel = OtpResponse.fromJson(json.decode(response.body));
+  }
+  return responseModel;
+}
+
+
+Future<StripeDetailResponse> stripe_detail(StripeDetailRequest requestModel) async {
+  StripeDetailResponse responseModel;
+
+
+  print("StripeDetailRequest" +
+      requestModel.toJson().toString());
+
+
+  final String url = API.Stripe_payment;
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode(requestModel.toJson()),
+  );
+  print("response "+requestModel.toJson().toString());
+  if (response.statusCode == 200) {
+    responseModel = StripeDetailResponse.fromJson(json.decode(response.body));
   }
   return responseModel;
 }
