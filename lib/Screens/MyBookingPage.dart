@@ -231,7 +231,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                           Row(
                                             children:[
                                               Container(
-                                                width: 252.0,
+                                                width: MediaQuery.of(context).size.width*0.7,
                                                 child: Column(
                                                   children: [
                                                     Container(
