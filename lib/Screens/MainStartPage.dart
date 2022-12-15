@@ -128,46 +128,46 @@ class _MainStartPageState extends State<MainStartPage>{
                           ),
                         ),
                       ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20.0),
-                              child:
-                                Center(
-                                 child: RichText(
-                                 text: TextSpan(
-                                  children: [
-                                TextSpan(
-                                  text: "Want to learn more?",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: " Click here.",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () async {
-                                      final url = 'http://bizit.me/';
-                                      if (await canLaunch(url)) {
-                                        await launch(
-                                          url,
-                                          forceSafariVC: false,
-                                        );
-                                      }
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                  ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(top: 20.0),
+                  //             child:
+                  //               Center(
+                  //                child: RichText(
+                  //                text: TextSpan(
+                  //                 children: [
+                  //               TextSpan(
+                  //                 text: "Want to learn more?",
+                  //                 style: TextStyle(
+                  //                   color: Colors.black,
+                  //                   fontSize: 14,
+                  //                   fontWeight: FontWeight.bold,
+                  //                   fontFamily: 'Montserrat',
+                  //                 ),
+                  //               ),
+                  //               TextSpan(
+                  //                 text: " Click here.",
+                  //                 style: TextStyle(
+                  //                   color: Colors.blueAccent,
+                  //                   fontSize: 14,
+                  //                   fontWeight: FontWeight.bold,
+                  //                   fontFamily: 'Montserrat',
+                  //                 ),
+                  //                 recognizer: TapGestureRecognizer()
+                  //                   ..onTap = () async {
+                  //                     final url = 'http://bizit.me/';
+                  //                     if (await canLaunch(url)) {
+                  //                       await launch(
+                  //                         url,
+                  //                         forceSafariVC: false,
+                  //                       );
+                  //                     }
+                  //                   },
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  // ),
                     ],
                   ),
                 ),
