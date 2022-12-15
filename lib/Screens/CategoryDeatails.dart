@@ -39,6 +39,7 @@ class _CategoryDeatailsState extends State<CategoryDeatails> {
   String uid = "";
   String documnetId = "";
   String length = "";
+  String msg = "";
   String latitude = "";
   String longitude =  "";
   static String deviceToken = "";
@@ -351,7 +352,7 @@ class _CategoryDeatailsState extends State<CategoryDeatails> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("No Data Available", textAlign: TextAlign.center,style: TextStyle(fontSize: 17.0,color: Colors.black,fontWeight: FontWeight.w500),),
+                        Text(msg, textAlign: TextAlign.center,style: TextStyle(fontSize: 17.0,color: Colors.black,fontWeight: FontWeight.w500),),
                       ],
                     )
                 ),
@@ -588,8 +589,21 @@ class _CategoryDeatailsState extends State<CategoryDeatails> {
 
 for(int i=0;i<postList.length;i++)
 {
-  length  = "1";
+  if(widget.titleName == postList[i].categoryName && userId != postList[i].userId)
+  {
+    length  = "1";
+    msg  = "";
+  }
 }
+
+if(length=="1")
+{
+  msg  = "";
+}
+else
+  {
+      msg = "No Data Available";
+  }
     setState(() {
       postList;
     });

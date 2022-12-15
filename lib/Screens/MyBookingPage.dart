@@ -538,9 +538,10 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                       child:  Wrap(
                                         children: [
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children:[
                                               Container(
-                                                width: 252.0,
+                                                width:MediaQuery.of(context).size.width * 0.70,
                                                 child: Column(
                                                   children: [
                                                     Container(
