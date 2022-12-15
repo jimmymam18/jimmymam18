@@ -13,7 +13,7 @@ class StripeDetailRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pay_id'] = this.user_id;
+    data['user_id'] = this.user_id;
     data['amount'] = this.amount;
     data['email'] = this.email;
     return data;

@@ -8,6 +8,8 @@ import 'package:bizitme/Models/BookingPaymentResponse.dart';
 import 'package:bizitme/Models/OkDialog.dart';
 import 'package:bizitme/Models/PostingModel.dart';
 import 'package:bizitme/Models/SendNotficationRequestModel.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailRequest.dart';
+import 'package:bizitme/Models/StripeDetails/StripeDetailResponse.dart';
 import 'package:bizitme/Models/appConstants.dart';
 import 'package:bizitme/Screens/MyBookingPage.dart';
 import 'package:bizitme/Screens/global.dart';
@@ -29,6 +31,8 @@ import 'package:intl/intl.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:uuid/uuid.dart';
+
+import '../global.dart';
 
 
 class BankAccountPage extends StatefulWidget {
@@ -131,8 +135,6 @@ class _BankAccountPageState extends State<BankAccountPage> {
   String deviceToken;
   // FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
-  String TestKey ="pk_test_8rYgqziVzih8wJZgo1sZhBh300JNObJeax";
- // String TestKey ="pk_live_c5E5SMdZOShtWacsFRzf5YIN00lVDBJtaL";
   bool save_card_image =false;
 
   String receiverToken = "";
@@ -279,7 +281,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
                 actions: <Widget>[],
                 backgroundColor: Colors.blue,
                 title: Text(
-                  "Payment Details",
+                  "Stripe Payment",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
@@ -1460,6 +1462,114 @@ class _BankAccountPageState extends State<BankAccountPage> {
                   ),
                 ),
                 */
+
+                 child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: new SafeArea(
+                    child:SingleChildScrollView(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(50, 200, 50, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Center(
+                                child: Container(
+                                  width: 120,
+                                  height: 120,
+                                  margin: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(10),
+                                  child: Image.asset("assets/Images/Logo.png",fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 40.0),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          GetStripeDetail();
+                                        },
+                                        child: Text(
+                                          'PAY \$'+widget.calculatedAmount ,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: 14.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        color: Color(0xff4996f3),
+                                        height: MediaQuery.of(context).size.height / 16,
+                                        minWidth: double.infinity,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20.0),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, true);
+                                        },
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14.0,
+                                            fontFamily: 'Montserrat',
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        color: Colors.grey,
+                                        height: MediaQuery.of(context).size.height / 16,
+                                        minWidth: double.infinity,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30),
+                                        ),
+                                      ),
+                                    ),
+
+
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 12, left: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: <Widget>[
+
+                                          Text(
+                                            'Amount of \$'+widget.calculatedAmount +' will be charged to your account',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'Lato',
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),),
+
+                    ),
+                  ),
+                ),
+
                 snackBar: const SnackBar(
                   content: Text('Tap back again to leave'),
                 ),
@@ -1562,8 +1672,6 @@ class _BankAccountPageState extends State<BankAccountPage> {
     }
 
 
-
-
     // final CreditCard testCard = CreditCard(
     //   name: txtCardHoldername.text,
     //   number: strCardnumber,
@@ -1588,7 +1696,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
     // }).catchError(setError);
   }
 
-  void setError(dynamic error) {
+  void setError() {
   /*  _scaffoldKey.currentState
         .showSnackBar(SnackBar(content: Text(error.toString())));*/
 
@@ -1598,7 +1706,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
     showDialog(
         context: context,
         builder: (BuildContext context1) => OKDialogBox(
-          title: "Invalid Card Details",
+          title: "Payment Failed. Please try again",
           description: "",
           my_context: context,
         ));
@@ -1625,7 +1733,7 @@ class _BankAccountPageState extends State<BankAccountPage> {
     }*/
     bookingPaymentRequest.amount = widget.calculatedAmount;
     bookingPaymentRequest.destinationAccount = stripeAccoutLink;
-    bookingPaymentRequest.source = strtokentid;
+    bookingPaymentRequest.source = paymentIntentId;
 
     BookingPaymentResponse bookingPaymentResponse = await bookingRef(bookingPaymentRequest);
     _progressDialog.dismissProgressDialog(context);
@@ -1655,330 +1763,6 @@ class _BankAccountPageState extends State<BankAccountPage> {
           ));
     }
   }
-
-//---------------------------------------------------------
-
-/*  Future submit_payment() async {
-    String userId =
-    await SHDFClass.readSharedPrefString(AppConstants.UserId, "");
-
-    final now = new DateTime.now();
-    String strdate = DateFormat('yyyy-MM-dd').format(now);
-    String strtime = DateFormat('HH:mm:ss').format(now);
-
-    Map map = {
-      "bid_id": widget.strbidid,
-      "amount": widget.strbidprice,
-      "source": strtokentid,
-      "pay_date": strdate,
-      "pay_time": strtime
-    };
-
-    if (progressDialog == false) {
-      progressDialog = true;
-      _progressDialog.showProgressDialog(context,
-          textToBeDisplayed: 'Loading...', dismissAfter: null);
-    }
-
-    await getPaymentSection(API.confirmationPayment, map, context);
-  }
-
-  Future<http.Response> getPaymentSection(
-      String url, Map jsonMap, BuildContext context) async {
-    var body = json.encode(jsonMap);
-    var responseInternet;
-    try {
-      responseInternet = await http
-          .post(url, headers: {"Content-Type": "application/json"}, body: body)
-          .then((http.Response response) {
-        final int statusCode = response.statusCode;
-        _progressDialog.dismissProgressDialog(context);
-        progressDialog = false;
-
-        if (statusCode < 200 || statusCode > 400 || json == null) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context1) => OKDialogBox(
-                title: 'Check your internet connections and settings !',
-                description: "",
-                my_context: context,
-              ));
-
-          throw new Exception("Error while fetching data");
-
-        } else {
-
-          storeStripeResponse responseData = new storeStripeResponse();
-          responseData.fromJson(json.decode(response.body));
-          Map<String, dynamic> data = responseData.toJson();
-          if (responseData.status == "1") {
-            _progressDialog.dismissProgressDialog(context);
-            progressDialog = false;
-
-            _ShowWarningQuaDialog(context);
-
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context1) => Dialog(
-                  elevation: 10.0,
-                  backgroundColor: Colors.white,
-                  child: dialogContent_postsuccessfull(context, ""),
-                ));
-
-            setState(() {});
-          } else {
-
-            showDialog(
-                context: context,
-                builder: (BuildContext context1) => OKDialogBox(
-                  title: '' + responseData.msg,
-                  description: "",
-                  my_context: context,
-                ));
-
-          }
-        }
-      });
-    } catch (e) {
-      _progressDialog.dismissProgressDialog(context);
-      progressDialog = false;
-      showDialog(
-          context: context,
-          builder: (BuildContext context1) => OKDialogBox(
-            title: 'Check your internet connections and settings !',
-            description: "",
-            my_context: context,
-          ));
-    }
-    return responseInternet;
-  }*/
-
-//------------------------------------------------------------
-
-  /*Future storeStripeCard() async {
-
-    await SHDFClass.readSharedPrefString(AppConstants.UserId, "");
-    Map map = {
-
-      "bid_id":widget.strbidid,
-      "pid":widget.pid,
-      "amount_to_pay":widget.strbidprice,
-      "source":strtokentid
-    };
-
-    if (progressDialog == false) {
-      progressDialog = true;
-      _progressDialog.showProgressDialog(context,
-          textToBeDisplayed: 'Loading...', dismissAfter: null);
-    }
-
-    await getStoreStripeCard(API.store_stripe_card, map, context);
-  }
-  Future<http.Response> getStoreStripeCard(
-      String url, Map jsonMap, BuildContext context) async {
-    var body = json.encode(jsonMap);
-    var responseInternet;
-    try {
-      responseInternet = await http
-          .post(url, headers: {"Content-Type": "application/json"}, body: body)
-          .then((http.Response response) {
-        final int statusCode = response.statusCode;
-        _progressDialog.dismissProgressDialog(context);
-        progressDialog = false;
-
-        if (statusCode < 200 || statusCode > 400 || json == null) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context1) => OKDialogBox(
-                title: 'Check your internet connections and settings !',
-                description: "",
-                my_context: context,
-              ));
-
-          throw new Exception("Error while fetching data");
-        } else {
-          ConfirmationPaymentResponse responseData =
-          new ConfirmationPaymentResponse();
-          responseData.fromJson(json.decode(response.body));
-          Map<String, dynamic> data = responseData.toJson();
-          if (responseData.status == "1") {
-            _progressDialog.dismissProgressDialog(context);
-            progressDialog = false;
-
-            _ShowWarningQuaDialog(context);
-
-            *//*showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context1) => Dialog(
-                  elevation: 10.0,
-                  backgroundColor: Colors.white,
-                  child: dialogContent_postsuccessfull(context, ""),
-                ));*//*
-
-            setState(() {});
-          } else {
-            showDialog(
-                context: context,
-                builder: (BuildContext context1) => OKDialogBox(
-                  title: '' + responseData.msg,
-                  description: "",
-                  my_context: context,
-                ));
-          }
-        }
-      });
-    } catch (e) {
-      _progressDialog.dismissProgressDialog(context);
-      progressDialog = false;
-      showDialog(
-          context: context,
-          builder: (BuildContext context1) => OKDialogBox(
-            title: 'Check your internet connections and settings !',
-            description: "",
-            my_context: context,
-          ));
-    }
-    return responseInternet;
-  }*/
-
-
-//------------------------------------------------------------
-
-  _ShowWarningQuaDialog(BuildContext context) {
-    return showDialog(
-        context: dialog_context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    //  height: MediaQuery.of(context).size.height* 0.40,
-                    // child: Card(
-                    //   elevation: 5.0,
-                    //   shape: RoundedRectangleBorder(
-                    //     side: BorderSide(color: Colors.white70, width: 1),
-                    //     borderRadius: BorderRadius.circular(15),
-                    //   ),
-                    //   child: Wrap(
-                    //     children: <Widget>[
-                    //       Center(
-                    //         child: Container(
-                    //           padding: EdgeInsets.fromLTRB(
-                    //               MediaQuery.of(context).size.height * 0.01,
-                    //               MediaQuery.of(context).size.height * 0.01,
-                    //               MediaQuery.of(context).size.height * 0.01,
-                    //               MediaQuery.of(context).size.height * 0.01),
-                    //           child: Column(
-                    //             children: <Widget>[
-                    //               new SizedBox(
-                    //                 height: 10,
-                    //               ),
-                    //               Image.asset(
-                    //                 "assets/images/payment_sucess.png",
-                    //                 scale: 6,
-                    //               ),
-                    //               new SizedBox(
-                    //                 height: 05,
-                    //               ),
-                    //               Text(
-                    //                 'Successful',
-                    //                 overflow: TextOverflow.ellipsis,
-                    //                 maxLines: 1,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                   fontFamily: 'Lato',
-                    //                   color: Color((0xff44536a)),
-                    //                   fontSize: 18,
-                    //                   fontStyle: FontStyle.normal,
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //               new SizedBox(
-                    //                 height: 15,
-                    //               ),
-                    //               Container(
-                    //                 padding: EdgeInsets.only(
-                    //                     left:
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.02,
-                    //                     right:
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.02),
-                    //                 child: Text(
-                    //                   'Payment Completed Successfully',
-                    //                   textAlign: TextAlign.center,
-                    //                   style: TextStyle(
-                    //                     fontFamily: 'Lato',
-                    //                     color: Color((0xff44536a)),
-                    //                     fontSize: 15,
-                    //                     fontStyle: FontStyle.normal,
-                    //                     fontWeight: FontWeight.normal,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               new SizedBox(
-                    //                 height: MediaQuery.of(context).size.height *
-                    //                     0.02,
-                    //               ),
-                    //               RaisedButton(
-                    //                 shape: new RoundedRectangleBorder(
-                    //                     borderRadius:
-                    //                     new BorderRadius.circular(128.0)),
-                    //                 textColor: Colors.white,
-                    //                 color: Color((0xffFab01b)),
-                    //                 padding: EdgeInsets.fromLTRB(
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.05,
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.00,
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.05,
-                    //                     MediaQuery.of(context).size.height *
-                    //                         0.00),
-                    //                 child: Text(
-                    //                   'OK',
-                    //                   textAlign: TextAlign.center,
-                    //                   style: TextStyle(
-                    //                     fontFamily: 'Montserrat',
-                    //                     color: Color((0xff44536a)),
-                    //                     fontSize: 1.8 *
-                    //                         MediaQuery.of(context).size.height *
-                    //                         0.01,
-                    //                     fontStyle: FontStyle.normal,
-                    //                     fontWeight: FontWeight.w500,
-                    //                   ),
-                    //                 ),
-                    //                 onPressed: () {
-                    //                   setState(() {
-                    //                     Navigator.pop(dialog_context, true);
-                    //                     Navigator.pop(context, true);
-                    //                     // Navigator.pop(context);
-                    //                   });
-                    //                 },
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                  ),
-                ],
-              ));
-        });
-  }
-
-
-//--------------------------------------------------------------
 
   _fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
@@ -2314,8 +2098,126 @@ class _BankAccountPageState extends State<BankAccountPage> {
       print("etttt"+e.toString());
     }
 
+  }
+
+
+
+  bool progressDialog = false;
+
+
+  String stripeClientSecretKey="";
+  String stripeCustomerId="";
+  String stripeEphemeralKeySecret="";
+  String paymentIntentId="";
+
+  void GetStripeDetail() async {
+
+    strProfileEmail= await SHDFClass.readSharedPrefString(AppConstants.CustEmail,"");
+    String UserId= await SHDFClass.readSharedPrefString(AppConstants.UserId,"");
+
+    if (progressDialog == false) {
+      progressDialog = true;
+      _progressDialog.showProgressDialog(context,
+          textToBeDisplayed: 'loading...', dismissAfter: null);
+    }
+
+    StripeDetailRequest otpRequest = new StripeDetailRequest();
+    otpRequest.user_id ="1";
+    otpRequest.amount =  widget.calculatedAmount;
+    otpRequest.email = strProfileEmail??"abc@gmail.com";
+    // otpRequest.email = strProfileEmail;
+
+    StripeDetailResponse otpResponse = await stripe_detail(otpRequest);
+    _progressDialog.dismissProgressDialog(context);
+    progressDialog = false;
+
+    if (otpResponse == null) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context1) => OKDialogBox(
+            title: 'Something went wrong, Please try again',
+            description: "",
+            my_context: context,
+          ));
+    } else if (otpResponse.status == "200") {
+      print("res  SUCCESS"+otpResponse.msg);
+
+      stripeClientSecretKey = otpResponse.payload.clientSecret;
+      stripeCustomerId = otpResponse.payload.customerId;
+      stripeEphemeralKeySecret = otpResponse.payload.ephemeralKey;
+      paymentIntentId = otpResponse.payload.paymentIntentId;
+
+      stripe_SDK();
+
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context1) => OKDialogBox(
+            // title: '' + responseData.msg,
+            title: otpResponse.msg,
+            description: "",
+            my_context: context,
+          ));
+    }
+  }
+
+
+
+  Future<void> stripe_SDK()
+  async {
+
+    try {
+
+
+      BillingDetails billingDetails = BillingDetails(
+          email: strProfileEmail
+      );
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+            // billingDetails: billingDetails,
+            paymentIntentClientSecret:stripeClientSecretKey,
+            customerId: stripeCustomerId,
+            customerEphemeralKeySecret: stripeEphemeralKeySecret,
+            style: ThemeMode.dark,
+            merchantDisplayName: 'Bizitme Stripe',
+          ));
+
+      displayPaymentSheet(billingDetails);
+
+    } catch (e) {
+      print('makePayment Exception : ' + e.toString());
+    }
+  }
+
+  bool isPaymentSucceeded=false;
+
+  displayPaymentSheet(BillingDetails billingDetails) async {
+
+    try{
+      await Stripe.instance.presentPaymentSheet();
+
+      PaymentIntent paymentIntent = await Stripe.instance.retrievePaymentIntent(stripeClientSecretKey);
+
+      print( 'PAYMENT_INTENT _STATUS' + paymentIntent.status.toString());
+      print( 'PAYMENT_INTENT _AMOUNT' + paymentIntent.amount.toString());
+
+      if(paymentIntent.status == PaymentIntentsStatus.Succeeded){
+        isPaymentSucceeded = true;
+        BookingApi();
+      }
+      else
+        {
+          isPaymentSucceeded = false;
+          setError();
+        }
+    }catch(exception){
+      print('displayPaymentSheet Exception  ' + exception.toString());
+    }
 
   }
+
+
+
 
 }
 
