@@ -1867,6 +1867,8 @@ class _BankAccountPageState extends State<BankAccountPage> {
     posting.subCategories = widget.subCategories;
     posting.compareTime = currentTime;
 
+    posting.ratingStatus = "False";
+
     String docId = widget.documentId;
 
     String fileID = Uuid().v4(); // Generate uuid and store it.

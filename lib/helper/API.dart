@@ -1,8 +1,8 @@
 class API{
 
 
-  // static const String stripePublishableKey = 'pk_test_8rYgqziVzih8wJZgo1sZhBh300JNObJeax'; //test key
-  static const String stripePublishableKey = 'pk_live_c5E5SMdZOShtWacsFRzf5YIN00lVDBJtaL'; //test key
+  static const String stripePublishableKey = 'pk_test_8rYgqziVzih8wJZgo1sZhBh300JNObJeax'; //test key
+  // static const String stripePublishableKey = 'pk_live_c5E5SMdZOShtWacsFRzf5YIN00lVDBJtaL'; //test key
 
   // static const String baseUrl = "http://13.59.162.217:8000/";
   static const String baseUrl = "https://bizit.me/";

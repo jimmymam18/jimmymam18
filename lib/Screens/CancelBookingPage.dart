@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 
 import 'package:bizitme/Models/Bizitme.dart';
@@ -17,6 +18,7 @@ import 'package:bizitme/Screens/global.dart';
 import 'package:bizitme/Screens/guestHomePage.dart';
 import 'package:bizitme/SingleChat/ChatScreen.dart';
 import 'package:bizitme/SingleChat/Peoples.dart';
+import 'package:bizitme/Utils/Colors.dart';
 import 'package:bizitme/repository/common_repository.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +34,7 @@ import 'package:bizitme/global.dart';
 import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class CancelBookingPage extends StatefulWidget {
   final String id;
@@ -67,6 +70,7 @@ class CancelBookingPage extends StatefulWidget {
   final String checkDocumentId;
   final String subCategories;
   final String compareTime;
+  final String ratingStatus;
   final List<String> names;
   final List<String> documentId;
 
@@ -75,7 +79,7 @@ class CancelBookingPage extends StatefulWidget {
     ,this.priceWeek, this.priceHour, this.categoryName, this.names, this.postingDate, this.documentId, this.latitude,
     this.longitude, this.latlng, this.bookingForStatus, this.fromDate, this.toDate, this.startTime, this.endTime,
     this.noOfHour, this.userEmail, this.click, this.userId, this.documnetId, this.cancellationPost, this.totalAmount,
-    this.refundAmount, this.cancellationDate, this.compareDocID, this.checkDocumentId, this.subCategories, this.compareTime}) : super(key: key);
+    this.refundAmount, this.cancellationDate, this.compareDocID, this.checkDocumentId, this.subCategories, this.compareTime, this.ratingStatus}) : super(key: key);
 
   @override
   _CancelBookingPageState createState() => _CancelBookingPageState();
@@ -106,6 +110,8 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
   String hideCancelBtn = "0";
   TimeOfDay selectedTimeNew = TimeOfDay(hour: 00, minute: 00);
 
+  double complete_rating = 1;
+  final TextEditingController txtReview = new TextEditingController();
 
 
   void getImage(){
@@ -141,8 +147,6 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
      hideCancelBtn = "0";
      setState(() {});
    }else{
-
-
      hideCancelBtn = "1";
      setState(() {});
    }
@@ -170,8 +174,86 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
   /* if(time != null){
      sixHourValidation();
    }*/
+
+    /// check for rating
+    if( widget.bookingForStatus == "Hour")
+    {
+      /// check using from date
+
+      var now = new DateTime.now();
+      var formatter = new DateFormat('MM/dd/yyyy');
+      var formattedDate = formatter.format(now);
+      print(formattedDate); // 2016-01-25
+
+      DateTime currentparseDate =
+      new DateFormat("MM/dd/yyyy").parse(formattedDate);
+      var curretnDate = DateTime.parse(currentparseDate.toString());
+
+
+
+      DateTime parseDate =
+      new DateFormat("MM/dd/yyyy").parse( widget.fromDate);
+      var fromdDate = DateTime.parse(parseDate.toString());
+
+      // var outputFormat = DateFormat('yyyy-MM-dd');
+      // var outputDate = outputFormat.format(fromdDate);
+      // print(outputDate);
+
+      if(curretnDate.isAfter(fromdDate)==true)
+      {
+// show Rating..
+        print(" show Rating");
+
+        if(widget.ratingStatus=="False")
+        {
+          Future.delayed(Duration.zero, () async {
+            _ShowDialog_rating(context);
+          });
+        }
+    }
+
+  }
+    else
+    {
+      // check from todate
+
+      var now = new DateTime.now();
+      var formatter = new DateFormat('MM/dd/yyyy');
+      var formattedDate = formatter.format(now);
+      print(formattedDate); // 2016-01-25
+
+      DateTime currentparseDate =
+      new DateFormat("MM/dd/yyyy").parse(formattedDate);
+      var curretnDate = DateTime.parse(currentparseDate.toString());
+
+
+      DateTime parseDate =
+      new DateFormat("MM/dd/yyyy").parse( widget.toDate);
+      var toDate = DateTime.parse(parseDate.toString());
+
+
+      if(curretnDate.isAfter(toDate)==true)
+      {
+// show Rating..
+        print(" show Rating");
+
+        if(widget.ratingStatus=="False")
+        {
+          Future.delayed(Duration.zero, () async {
+            _ShowDialog_rating(context);
+          });
+        }
+      }
+
+
+
+    }
+
+    Future.delayed(Duration.zero, () async {
+      _ShowDialog_rating(context);
+    });
     super.initState();
-  setState(() {});
+
   }
 
   @override
@@ -411,7 +493,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                             ),
                             Row(
                               children: [
-                                Image.asset('assets/Images/hour.png',height: 15,width: 15,),
+                                Image.asset('assets/Images/per_hour.png',height: 15,width: 15,),
                                 Padding(padding: EdgeInsets.only(left: 3),),
                                 Text(widget.noOfHour,style: TextStyle(color: Colors.black,fontSize: 14),),
                               ],
@@ -1397,6 +1479,349 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
     posting.deleteListDateInfoInFirestore(deleteDateDocId).whenComplete(() {
       setState(() {});
+    });
+  }
+
+  _ShowDialog_rating(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0)),
+              elevation: 0.0,
+              child: Container(
+                margin: EdgeInsets.only(left: 0.0, right: 0.0),
+                child: Wrap(
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                minWidth: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    )),
+                                highlightColor: Colors.white,
+                                splashColor: Colors.blue.withAlpha(100),
+                                onPressed: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pop();
+                                  submitRatingStatus();
+                                },
+                                child: Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: new Image.asset(
+                                    "assets/Images/close_circle.png",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: Container(
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                          color: Colors.white,
+                                          width: 0,
+                                          style: BorderStyle.solid),
+                                      borderRadius: BorderRadius.circular(
+                                        10,
+                                      )),
+                                  color: Colors.white,
+                                  highlightColor: Colors.white,
+                                  splashColor: Colors.blue.withAlpha(100),
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  onPressed: () {},
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                        child: Image.asset(
+                                          // 'assets/images/confirmationpostimg.png',
+                                          'assets/Images/submitfeedbackimg.png',
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.5,
+                                          height: 150,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              InkWell(
+                                child: Container(
+                                  padding:
+                                  EdgeInsets.only(top: 15.0, bottom: 15.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(16.0),
+                                        bottomRight: Radius.circular(16.0)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(top: 0),
+                                        child: Text(
+                                          "Feedback",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.yellow,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "EuclidCircularA-Bold",
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 10, left: 5, right: 5),
+                                        child: new Text(
+                                          "Rate your expierence",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily:
+                                            'EuclidCircularA-Regular',
+                                            color: color_darkblue,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ),
+                                      new SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            margin:
+                                            const EdgeInsets.only(top: 10),
+                                            child: RatingBar.builder(
+                                              initialRating: complete_rating,
+                                              minRating: 1,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 35.0,
+                                              itemPadding: EdgeInsets.symmetric(
+                                                  horizontal: 1.0),
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                print(rating);
+                                                complete_rating = rating;
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 20, right: 2, left: 2),
+                                        child: Text(
+                                          "Write a review (optional)",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily:
+                                            'EuclidCircularA-Regular',
+                                            color: color_darkblue,
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.normal,
+                                          ),
+                                        ),
+                                      ),
+                                      new SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10.0),
+                                              topLeft: Radius.circular(10.0),
+                                              bottomLeft: Radius.circular(10.0),
+                                              bottomRight:
+                                              Radius.circular(10.0),
+                                            ),
+                                            color: colorbacktextbox),
+                                        margin: const EdgeInsets.only(
+                                            left: 10, right: 10, top: 0),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                                  0.7,
+                                              height: 40,
+                                              child: TextFormField(
+                                                controller: txtReview,
+                                                keyboardType:
+                                                TextInputType.text,
+                                                textInputAction:
+                                                TextInputAction.done,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                  'EuclidCircularA-Regular',
+                                                  color: color_darkblue,
+                                                  fontSize: 12,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintStyle: TextStyle(
+                                                    fontFamily:
+                                                    'EuclidCircularA-Light',
+                                                    color: colortextboxhint
+                                                        .withOpacity(0.5),
+                                                    fontSize: 12,
+                                                  ),
+                                                  hintText: 'Write here',
+                                                  counterText: "",
+                                                  contentPadding:
+                                                  EdgeInsets.only(
+                                                      left: 10.0,
+                                                      bottom: 10),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      new SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.9,
+                                          height: 45,
+                                          margin:
+                                          EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                          child: Container(
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                      color: color_darkblue,
+                                                      width: 0,
+                                                      style: BorderStyle.solid),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    10,
+                                                  )),
+                                              color: color_darkblue,
+                                              highlightColor: Colors.white,
+                                              splashColor:
+                                              Colors.blue.withAlpha(100),
+                                              padding: EdgeInsets.only(
+                                                  top: 5, bottom: 5),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                submitRatingStatus();
+                                              },
+                                              child: Stack(
+                                                overflow: Overflow.visible,
+                                                alignment: Alignment.center,
+                                                children: <Widget>[
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        margin:
+                                                        EdgeInsets.fromLTRB(
+                                                            30, 0, 0, 0),
+                                                        child: Text(
+                                                          "Submit",
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                              "EuclidCircularA-SemiBold",
+                                                              fontSize: 14,
+                                                              letterSpacing: 1,
+                                                              color:
+                                                              Colors.white),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 0, 30, 0),
+                                                        child: Image.asset(
+                                                          'assets/Images/rightarrow.png',
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+
+  void submitRatingStatus()
+  {
+    PostingModel posting = PostingModel();
+    posting.StoreRatingStatus(widget.id).whenComplete(() {
+
+
+      posting.StoreRatingAgaintPost(widget.compareDocID,complete_rating.toString(),txtReview.text.toString()).whenComplete(() {
+
+        print("StoreRatingAgaintPost");
+
+      });
+
     });
   }
 

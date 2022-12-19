@@ -56,6 +56,7 @@ class PostingModel
   String cancellationDate;
   String subCategories;
   String compareTime;
+  String ratingStatus;
 
   PostingModel(
       {this.id,
@@ -95,7 +96,8 @@ class PostingModel
         this.compareDocID,
         this.dateOrderId,
         this.subCategories,
-        this.compareTime
+        this.compareTime,
+        this.ratingStatus
         }) {
     if (this.id?.isEmpty ?? true) this.id = Uuid().v4().toString();
     this.imageNames = [];
@@ -344,6 +346,7 @@ class PostingModel
       "compareDocID": this.compareDocID,
       "subCategories": this.subCategories,
       "compareTime": this.compareTime,
+      "ratingStatus": this.ratingStatus,
     };
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
@@ -589,6 +592,53 @@ class PostingModel
 
 
   }
+
+
+
+
+   //Store Rating Status against user
+   Future<void> StoreRatingStatus(String id) async {
+
+     final FirebaseAuth auth = FirebaseAuth.instance;
+     final User user = auth.currentUser;
+     final uid = user.uid;
+     print(user.uid);
+
+
+     FirebaseFirestore.instance
+         .collection('users')
+         .doc(uid).collection("my_booking").doc(id)
+         .update({
+       "ratingStatus":"True",
+     }).then((result){
+       print("new USer true");
+     }).catchError((onError){
+       print("onError");
+     });
+
+   }
+
+
+
+
+   Future<void> StoreRatingAgaintPost(String saveBookingId,String complete_rating,String review) async {
+     // setImageNames();
+     Map<String, dynamic> data = {
+       "rating":complete_rating,
+       "review":review,
+     };
+     final FirebaseAuth auth = FirebaseAuth.instance;
+     final User user = auth.currentUser;
+     final uid = user.uid;
+     print(user.uid);
+
+     await FirebaseFirestore.instance.collection('all_post').doc(saveBookingId).collection("ratings").add(data); // old qurey
+
+//    await FirebaseFirestore.instance.collection('all_post').doc(id).collection("booking_dates").doc(fileID).update(data); // new query
+
+   }
+
+
 
 
 }

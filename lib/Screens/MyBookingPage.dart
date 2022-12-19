@@ -468,6 +468,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                     String compareDocID = postList[position].compareDocID;
                                     String subCategories = postList[position].subCategories;
                                     String compareTime = postList[position].compareTime;
+                                    String ratingStatus = postList[position].ratingStatus;
 
                                     List<String> imageList = postList[position].names;
 
@@ -482,7 +483,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                               postingDate:postingDate,latitude:latitude, longitude:longitude, latlng:latlng ,bookingForStatus: bookingForStatus,
                                               fromDate:fromDate, toDate:toDate, startTime:startTime, endTime:endTime, noOfHour:noOfHour,
                                               userId:userId,documnetId:documnetId,checkDocumentId:checkDocumentId,compareDocID:compareDocID
-                                            ,subCategories:subCategories, compareTime:compareTime,)));
+                                            ,subCategories:subCategories, compareTime:compareTime, ratingStatus:ratingStatus,)));
                                     setState(() {});
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelBookingPage()));
 
@@ -801,6 +802,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                     String cancellationDate = postList[position].cancellationDate;
                                     String compareDocID = postList[position].compareDocID;
                                     String compareTime = postList[position].compareTime;
+                                    String ratingStatus = postList[position].ratingStatus;
                                     String id = postList[position].id;
 
                                     List<String> imageList = postList[position].names;
@@ -812,7 +814,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                                                 postingDate:postingDate,latitude:latitude, longitude:longitude, latlng:latlng ,bookingForStatus: bookingForStatus,
                                                 fromDate:fromDate, toDate:toDate, startTime:startTime, endTime:endTime, noOfHour:noOfHour,
                                                 userId:userId,documnetId:documnetId,cancellationDate:cancellationDate,compareDocID:compareDocID,
-                                                cancellationPost:"Cancelled",totalAmount:calculatedAmount, compareTime: compareTime, refundAmount: amount.round().toString())));
+                                                cancellationPost:"Cancelled",totalAmount:calculatedAmount, compareTime: compareTime, ratingStatus: ratingStatus, refundAmount: amount.round().toString())));
                                     setState(() {});
 
                                   },
@@ -1130,6 +1132,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 String receiverDeviceToken = postList[position].receiverDeviceToken;
                 String id = postList[position].id;
                 String compareTime = postList[position].compareTime;
+                String ratingStatus = postList[position].ratingStatus;
 
                 List<String> imageList = postList[position].names;
 
@@ -1142,7 +1145,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                           location: location, priceDay: amountDay, priceHour: amountHour, priceWeek: amountWeek,categoryName:categoryName, names: imageList,
                           postingDate:postingDate,latitude:latitude, longitude:longitude, latlng:latlng ,bookingForStatus: bookingForStatus,
                           fromDate:fromDate, toDate:toDate, startTime:startTime, endTime:endTime, noOfHour:noOfHour,
-                          userId:userId,documnetId:documnetId,compareTime: compareTime,)));
+                          userId:userId,documnetId:documnetId,compareTime: compareTime,ratingStatus: ratingStatus,)));
                 setState(() {});
                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelBookingPage()));
 
@@ -1577,6 +1580,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 String compareDocID = postList[position].compareDocID;
                 String id = postList[position].id;
                 String compareTime = postList[position].compareTime;
+                String ratingStatus = postList[position].ratingStatus;
 
                 List<String> imageList = postList[position].names;
 
@@ -1587,7 +1591,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                           postingDate:postingDate,latitude:latitude, longitude:longitude, latlng:latlng ,bookingForStatus: bookingForStatus,
                           fromDate:fromDate, toDate:toDate, startTime:startTime, endTime:endTime, noOfHour:noOfHour,
                           userId:userId,documnetId:documnetId,cancellationDate:cancellationDate,compareDocID:compareDocID,
-                            cancellationPost:"Cancelled",totalAmount:calculatedAmount, compareTime:compareTime,refundAmount: amount.round().toString())));
+                            cancellationPost:"Cancelled",totalAmount:calculatedAmount, compareTime:compareTime, ratingStatus:ratingStatus,refundAmount: amount.round().toString())));
                 setState(() {});
 
               },
@@ -1606,7 +1610,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
       _progressDialog.showProgressDialog(context,
           textToBeDisplayed: 'loading...', dismissAfter: null);
     }
-
+    String firstName="";
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print(user.uid);
@@ -1654,6 +1658,8 @@ class _MyBookingPageState extends State<MyBookingPage> {
         String compareDocID = values['compareDocID'];
         String subCategories = values['subCategories'];
         String compareTime = values['compareTime'];
+
+        String ratingStatus = values['ratingStatus'];
 
         posting.names = List.from(document['imageNames']);
         print("images list "+posting.names.length.toString());
@@ -1751,6 +1757,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
             posting.cancellationDate = cancellationDate;
             posting.compareDocID = compareDocID;
             posting.compareTime = compareTime;
+            posting.ratingStatus = ratingStatus;
             posting.id = id;
          }
 

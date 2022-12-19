@@ -75,6 +75,7 @@ dependencies:
   country_code_picker: ^1.7.0
   flutter_rating: ^0.0.2
   geocoder: ^0.2.1
+  flutter_rating_bar: ^4.0.0
 
 #  stripe_payment: ^1.1.4
 
@@ -128,6 +129,9 @@ flutter:
     - assets/Images/chatsendimg.png
     - assets/Images/checkicon_payment.png
     - assets/Images/uncheckicon_payment.png
+    - assets/Images/close_circle.png
+    - assets/Images/submitfeedbackimg.png
+    - assets/Images/rightarrow.png
     - assets/audio/notification_sound.mp3
 
 

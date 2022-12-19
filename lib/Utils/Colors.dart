@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+Color colortextboxhint= new Color(0xff063CA3);
+Color colorbacktextbox= new Color(0xffF5F6FA);
 
 Color colorOne = Colors.red;
 Color colorTwo = Colors.red[300];
