@@ -112,6 +112,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
   double complete_rating = 1;
   final TextEditingController txtReview = new TextEditingController();
+  String str_userName = "";
 
 
   void getImage(){
@@ -161,6 +162,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
     transaction_id=widget.transaction_id;
     // TODO: implement initState
     getImage();
+    getProfile();
     getProfileData();
 
     var formatter = new DateFormat('dd-MM-yyyy');
@@ -244,14 +246,11 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
           });
         }
       }
-
-
-
     }
 
-    Future.delayed(Duration.zero, () async {
-      _ShowDialog_rating(context);
-    });
+    // Future.delayed(Duration.zero, () async {
+    //   _ShowDialog_rating(context);
+    // });
     super.initState();
 
   }
@@ -1119,7 +1118,8 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
         if(document.id == widget.userId){
 
           setState(() {
-            name =  values['firstName'];
+            // name =  values['firstName'];
+            name = values['firstName'] +" "+ values['lastName'];
             profilePicture = values['image'];
             print("IMAGE URL : "+profilePicture);
             emailId = values['email'];
@@ -1810,13 +1810,14 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
   }
 
 
+
+
   void submitRatingStatus()
   {
     PostingModel posting = PostingModel();
     posting.StoreRatingStatus(widget.id).whenComplete(() {
 
-
-      posting.StoreRatingAgaintPost(widget.compareDocID,complete_rating.toString(),txtReview.text.toString()).whenComplete(() {
+      posting.StoreRatingAgaintPost(widget.compareDocID,complete_rating.toString(),txtReview.text.toString(),str_userName).whenComplete(() {
 
         print("StoreRatingAgaintPost");
 
@@ -1824,6 +1825,28 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
     });
   }
+  getProfile() async {
 
+    var query = FirebaseFirestore.instance.collection('users');
 
+    await query.get().then((querySnapshot) async {
+      querySnapshot.docs.forEach((document) async {
+        Map<String, dynamic> values = document.data();
+        String primaryKeyValue = values['address'];
+
+        String emailmain =
+        await Bizitme.readSharedPrefString(AppConstants.CustEmail, "");
+
+        String email = values['email'];
+
+        if(emailmain ==email) {
+          setState(() {
+            str_userName = values['firstName'] +" "+ values['lastName'];
+            email = values['email'];
+          });
+        }
+      });
+
+    });
+  }
 }

@@ -621,11 +621,12 @@ class PostingModel
 
 
 
-   Future<void> StoreRatingAgaintPost(String saveBookingId,String complete_rating,String review) async {
+   Future<void> StoreRatingAgaintPost(String saveBookingId,String complete_rating,String review,String name) async {
      // setImageNames();
      Map<String, dynamic> data = {
        "rating":complete_rating,
        "review":review,
+       "name":name,
      };
      final FirebaseAuth auth = FirebaseAuth.instance;
      final User user = auth.currentUser;

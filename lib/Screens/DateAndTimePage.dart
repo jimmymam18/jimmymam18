@@ -105,7 +105,10 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
            }
          }
          value = "0";
-         getDaysValidation(startDate, endDate);
+         if(startDate!=null && endDate!=null )
+         {
+           getDaysValidation(startDate, endDate);
+         }
        }else{
          fromDate = DateFormat("MM/dd/yyyy").format(startDate);
        }
@@ -152,7 +155,10 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
                }
              }
              value = "0";
-             getDaysValidation(startDate, endDate);
+             if(startDate!=null && endDate!=null )
+             {
+               getDaysValidation(startDate, endDate);
+             }
              if (flag == true) {
                Fluttertoast.showToast(
                    msg: "Date is not available, Please select another date",
@@ -167,8 +173,10 @@ class _DateAndTimePageState extends State<DateAndTimePage> {
            }
            else{
 
-             getDaysValidation(startDate, endDate);
-
+             if(startDate!=null && endDate!=null )
+             {
+               getDaysValidation(startDate, endDate);
+             }
            }
          }
 

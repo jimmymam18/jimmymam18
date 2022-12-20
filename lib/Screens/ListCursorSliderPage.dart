@@ -1,4 +1,6 @@
 import 'package:bizitme/Models/Bizitme.dart';
+import 'package:bizitme/Models/PostingModel.dart';
+import 'package:bizitme/Models/RatingModel.dart';
 import 'package:bizitme/Models/appConstants.dart';
 import 'package:bizitme/Models/custom_progress_dialog.dart';
 import 'package:bizitme/Screens/CancellationPolicy.dart';
@@ -6,11 +8,13 @@ import 'package:bizitme/Screens/CancellationPolicyPage.dart';
 import 'package:bizitme/Screens/CategoryDeatails.dart';
 import 'package:bizitme/Screens/DateAndTimePage.dart';
 import 'package:bizitme/Screens/global.dart';
+import 'package:bizitme/Screens/ratingListPage.dart';
 import 'package:bizitme/SingleChat/ChatScreen.dart';
 import 'package:bizitme/SingleChat/Peoples.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:bizitme/Models/cloud_storage_service.dart';
@@ -84,6 +88,7 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
   ProgressDialog _progressDialog = new ProgressDialog();
 
   bool favourite_on = false;
+  double finalRating=0;
 
   void getImage() {
     names.clear();
@@ -96,6 +101,8 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
 
   @override
   void initState() {
+    AppConstants.ratingModel.clear();
+    getRatingFromStore();
     CheckFavourite();
     getImage();
     getProfileData();
@@ -140,6 +147,7 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
               ),
               textAlign: TextAlign.center),
           centerTitle: true,
+
           backgroundColor: Color(0xff4996f3),
           leading: IconButton(
             icon: new Icon(
@@ -172,6 +180,7 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
 
             },
           ),
+
         ),
         body: Stack(
           children: <Widget>[
@@ -188,6 +197,7 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
                                 ))
                             .toList(),
                       )),
+
                   Container(
                     margin: EdgeInsets.only(top: 15, bottom: 10),
                     child: Padding(
@@ -269,9 +279,93 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
                       ),
                     ),
                   ),
+
                   SizedBox(
                     height: 5,
                   ),
+
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    
+
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            finalRating.toStringAsFixed(1).toString(),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              fontFamily: 'Montserrat_Medium',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          
+                          RatingBar.builder(
+                            initialRating: finalRating,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemSize: 15.0,
+                            itemPadding:
+                            EdgeInsets.symmetric(horizontal: 1.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: null,
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        children: [
+                       
+                          RaisedButton(
+                            elevation: 7.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                  RatingListPage()));
+                            },
+                            padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            color: Color(0xff4996f3),
+                            child: Text(
+                              'View Ratings',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat'),
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      ),
+                      
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 5,
+                  ),
+
+
+
                   Expanded(
                       flex: 0,
                       child: Container(
@@ -682,9 +776,12 @@ class _ListCusrsolPageState extends State<ListCusrsolPage> {
                       ],
                     ),
                   ),
+
                   SizedBox(
                     height: 20,
                   ),
+
+
                   RaisedButton(
                     elevation: 7.0,
                     shape: RoundedRectangleBorder(
@@ -1085,6 +1182,65 @@ setState(() {
 
   }
 
+
+  void calculateRating()
+  {
+    var values = [
+      {'userId': 1, 'rating': 4.5},
+      {'userId': 2, 'rating': 4.0},
+      {'userId': 3, 'rating': 3.5},
+      {'userId': 4, 'rating': 3.0}
+    ];
+
+    var result = values.map((m) => m['rating']).reduce((a, b) => a + b) / values.length;
+    print(result);
+  }
+
+
+  //GETTING BOOKING DATES
+  Future<void> getRatingFromStore() async {
+    if (progressDialog == false) {
+      progressDialog = true;
+      _progressDialog.showProgressDialog(context,
+          textToBeDisplayed: 'loading...', dismissAfter: null);
+    }
+
+    var values1 = [
+    ];
+    String docId = widget.documentId;
+    Query query = FirebaseFirestore.instance.collection('all_post').doc(docId).collection("ratings");
+    print(query);
+    await query.get().then((querySnapshot) async {
+      // categoryList.clear();
+      querySnapshot.docs.forEach((document) {
+       var values = document.data();
+        print(values);
+
+        print( document['rating']);
+
+        double ratte=double.parse(document['rating']);
+
+       values1.add({ 'rating': ratte});
+
+       var result = values1.map((m) => m['rating']).reduce((a, b) => a + b) / values1.length;
+       print(result);
+
+       RatingModel rating_model=new RatingModel();
+       rating_model.name=document['name'];
+       rating_model.rating=document['rating'];
+       rating_model.review=document['review'];
+       AppConstants.ratingModel.add(rating_model);
+
+       finalRating=result;
+
+      });
+
+      _progressDialog.dismissProgressDialog(context);
+      progressDialog = false;
+
+      setState(() {});
+    });
+  }
 
 
 }

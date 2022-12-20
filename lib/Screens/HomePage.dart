@@ -407,29 +407,6 @@ class _HomePageState extends State<HomePage> {
 
   getProfile() async {
 
-  //  var user = firebase.auth().currentUser;
-
-  /*  if (user != null) {
-      user.providerData.forEach(function (profile) {
-      console.log("Sign-in provider: " + profile.providerId);
-      console.log("  Provider-specific UID: " + profile.uid);
-      console.log("  Name: " + profile.displayName);
-      console.log("  Email: " + profile.email);
-      console.log("  Photo URL: " + profile.photoURL);
-      });
-    }*/
-
-   /* db = FirebaseDatabase.instance.reference().child("users");
-    db.once().then((DataSnapshot snapshot){
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key,values) {
-        print(values["firstName"]);
-      });
-    });*/
-
-
-
-
     var query = FirebaseFirestore.instance.collection('users');
 
     await query.get().then((querySnapshot) async {
@@ -451,8 +428,6 @@ class _HomePageState extends State<HomePage> {
       });
 
     });
-
-
   }
 }
 

@@ -2,6 +2,8 @@ import 'package:bizitme/Models/Bizitme.dart';
 import 'package:bizitme/Models/userObjects.dart';
 import 'package:flutter/material.dart';
 
+import 'RatingModel.dart';
+
 class AppConstants {
   static final String appName = 'BizitMe';
   static final String googleMapsAPIKey =
@@ -65,5 +67,6 @@ class AppConstants {
   static const String CARD_HOLDER_NAME = "cardinfo7";
 
 
+  static final List<RatingModel> ratingModel = new List();
 
 }
