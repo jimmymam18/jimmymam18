@@ -42,7 +42,7 @@ class CancelBookingPage extends StatefulWidget {
   final String transaction_id;
   final String calculatedAmount;
   final String title;
-   final String description;
+  final String description;
   final String location;
   final String priceHour;
   final String priceDay;
@@ -127,37 +127,37 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
   void
   sixHourValidation(){
 
-  {
-    String getHour = widget.compareTime.substring(0,2);
-    print("GET TWO LETTER : "+getHour);
+    {
+      String getHour = widget.compareTime.substring(0,2);
+      print("GET TWO LETTER : "+getHour);
 
-    String getMinuite = widget.compareTime.substring(3,5);
-    String getAMPM = widget.compareTime.substring(5,8);
-    print("GET TWO LETTER : "+getMinuite);
-    print("getAMPM : "+getAMPM);
-
-
-
-    String finalTime = formatDate(
-        DateTime(2020, 08, 1, int.parse(getHour), int.parse(getMinuite)),
-        [hh, ':', nn, " ", getAMPM.trim()]).toString();
-
-    print("FINAL TIME :"+finalTime);
+      String getMinuite = widget.compareTime.substring(3,5);
+      String getAMPM = widget.compareTime.substring(5,8);
+      print("GET TWO LETTER : "+getMinuite);
+      print("getAMPM : "+getAMPM);
 
 
-    var format = DateFormat("HH:mm a");
-    var one = format.parse(currentTime);
-    var two = format.parse(finalTime);
-    print("${two.difference(one)}");
 
-    if(one.isBefore(two)){
-      hideCancelBtn = "1";
-      setState(() {});
-    }else{
-      hideCancelBtn = "0";
-      setState(() {});
+      String finalTime = formatDate(
+          DateTime(2020, 08, 1, int.parse(getHour), int.parse(getMinuite)),
+          [hh, ':', nn, " ", getAMPM.trim()]).toString();
+
+      print("FINAL TIME :"+finalTime);
+
+
+      var format = DateFormat("HH:mm a");
+      var one = format.parse(currentTime);
+      var two = format.parse(finalTime);
+      print("${two.difference(one)}");
+
+      if(one.isBefore(two)){
+        hideCancelBtn = "1";
+        setState(() {});
+      }else{
+        hideCancelBtn = "0";
+        setState(() {});
+      }
     }
-  }
 
     setState(() {});
   }
@@ -178,7 +178,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
     print(formattedDate);
 
     currentTime = DateFormat('hh:mm a').format(DateTime.now());
-  //  print("TIME NOW : "+currentTime);
+    //  print("TIME NOW : "+currentTime);
 
 
     /// check for rating
@@ -217,7 +217,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
           });
         }
         hideCancelBtn = "0";
-    }
+      }
 
 
       if(curretnDate.isAtSameMomentAs(fromdDate)==true)
@@ -225,7 +225,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
         hideCancelBtn = "0";
       }
 
-  }
+    }
     else
     {
       // check from todate
@@ -338,64 +338,64 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
 
-                      Column(
-                        children: [
-                          widget.click == "Order"
-                              ? Container(
-                                  width:MediaQuery.of(context).size.width * 0.70,
-                                  margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 3),
-                                  child:  Text('Customer Details',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, fontFamily: "Montserrat",
-                                        color: Colors.black),),
-                                )
-                              :Container(),
-                          widget.click == "Order"
-                              ?
-                          Container(
-                            width:MediaQuery.of(context).size.width * 0.70,
-                            margin: EdgeInsets.only(left: 10, right: 10, top: 1, bottom: 0),
-                            child:  Text(widget.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Montserrat",
-                                  color: Colors.black),),
-                          )
-                          :Container(
-                            width:MediaQuery.of(context).size.width * 0.70,
-                            margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
-                            child:  Text(widget.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Montserrat",
-                                  color: Colors.black),),
-                          ),
+                        Column(
+                          children: [
+                            widget.click == "Order"
+                                ? Container(
+                              width:MediaQuery.of(context).size.width * 0.70,
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 3),
+                              child:  Text('Customer Details',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, fontFamily: "Montserrat",
+                                    color: Colors.black),),
+                            )
+                                :Container(),
+                            widget.click == "Order"
+                                ?
+                            Container(
+                              width:MediaQuery.of(context).size.width * 0.70,
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 1, bottom: 0),
+                              child:  Text(widget.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Montserrat",
+                                    color: Colors.black),),
+                            )
+                                :Container(
+                              width:MediaQuery.of(context).size.width * 0.70,
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
+                              child:  Text(widget.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "Montserrat",
+                                    color: Colors.black),),
+                            ),
 
-                          widget.click == "Order"
-                              ? Container(
-                            width:MediaQuery.of(context).size.width * 0.70,
-                            margin: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 15),
-                            child:  Text("Email Id :"+widget.userEmail,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, fontFamily: "Montserrat",
-                                  color: Colors.black),),
-                          )
-                              :Container(),
+                            widget.click == "Order"
+                                ? Container(
+                              width:MediaQuery.of(context).size.width * 0.70,
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 15),
+                              child:  Text("Email Id :"+widget.userEmail,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, fontFamily: "Montserrat",
+                                    color: Colors.black),),
+                            )
+                                :Container(),
 
-                        ],
-                      ),
-                     InkWell(
-                       onTap: (){
-                         checkUserToken();
-                         setState(() {});
-                       },
-                       child:   Container(
-                         margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 15),
-                         child: Image.asset('assets/Images/chat.png',height: 28,width: 28,),
-                       )
-                     ),
+                          ],
+                        ),
+                        InkWell(
+                            onTap: (){
+                              checkUserToken();
+                              setState(() {});
+                            },
+                            child:   Container(
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 15),
+                              child: Image.asset('assets/Images/chat.png',height: 28,width: 28,),
+                            )
+                        ),
 
                       ],
                     ),
@@ -498,7 +498,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       widget.bookingForStatus == "Hour"
-                      ?Expanded(child: Container(
+                          ?Expanded(child: Container(
                         margin: EdgeInsets.only(left: 15, right: 10,  bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,7 +519,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                           ],
                         ),
                       ),)
-                      :Expanded(child: Container(
+                          :Expanded(child: Container(
                         margin: EdgeInsets.only(left: 15, right: 10,  bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -619,7 +619,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                           ],
                         ),
                       ),)
-                      :Expanded(child: Container(
+                          :Expanded(child: Container(
                         margin: EdgeInsets.only(left: 15, right: 10,  bottom: 15, top: 3),
                         width: MediaQuery.of(context).size.width*0.49,
                         child:  Column(
@@ -703,10 +703,10 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                                           width: 4,
                                         ),
                                         widget.bookingForStatus == "Hour"
-                                       ? Text('\$'+widget.priceHour+"/Hour",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,fontFamily: 'Montserrat'),)
-                                        : widget.bookingForStatus == "Day"
+                                            ? Text('\$'+widget.priceHour+"/Hour",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,fontFamily: 'Montserrat'),)
+                                            : widget.bookingForStatus == "Day"
                                             ?Text('\$'+widget.priceDay+"/Day",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,fontFamily: 'Montserrat'),)
-                                        :Text('\$'+widget.priceWeek+"/Week",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,fontFamily: 'Montserrat'),),
+                                            :Text('\$'+widget.priceWeek+"/Week",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,fontFamily: 'Montserrat'),),
                                         Padding(
                                           padding: EdgeInsets.only(left: 0.0,right: 0,bottom: 0,top: 5),
                                         ),
@@ -735,10 +735,10 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       Container(
-                         child: Text('Description',style: TextStyle(color: Colors.black,fontSize: 10,fontFamily: 'Montserrat',
-                         ),),
-                       ),
+                        Container(
+                          child: Text('Description',style: TextStyle(color: Colors.black,fontSize: 10,fontFamily: 'Montserrat',
+                          ),),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(left: 12.0,right: 0,bottom: 0,top: 5),
                         ),
@@ -763,19 +763,19 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                         ),
                         Row(
                           children: [
-                           InkWell(
-                             onTap:(){
-                               openMap();
-                               setState(() {});
-                             },
-                             child: Container(
-                               width: MediaQuery.of(context).size.width * 0.85,
-                               child:  Text(widget.location,
-                                 style: TextStyle(fontSize: 12,fontFamily: "Montserrat",
-                                     fontWeight: FontWeight.w500),
-                               ),
-                             ),
-                           ),
+                            InkWell(
+                              onTap:(){
+                                openMap();
+                                setState(() {});
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                child:  Text(widget.location,
+                                  style: TextStyle(fontSize: 12,fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(left: 2),
                             ),
@@ -790,7 +790,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                   ),
 
                   widget.cancellationPost != "Cancelled"
-                 ? RaisedButton(
+                      ? RaisedButton(
                     elevation: 7.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -808,7 +808,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
                     child: Text('Cancel Booking',style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: 'Montserrat'),),
                   )
-                  :Container(
+                      :Container(
                     margin: EdgeInsets.only(left: 15, right: 15),
                     width: MediaQuery.of(context).size.width,
                     child: Column(
@@ -820,19 +820,19 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                           color:Colors.blue,
                         ),
 
-                     Container(
-                       margin: EdgeInsets.only(top: 15, bottom: 5),
-                       child:    Row(
-                         children: [
-                           Text("Cancellation Date :",style: TextStyle(color: Colors.grey,
-                               fontSize: 11,fontFamily: "Montserrat",
-                               fontWeight: FontWeight.bold),),
-                           SizedBox(width: 4,),
-                           Text(widget.cancellationDate == null ?"NA":widget.cancellationDate,style: TextStyle(color: Colors.black,fontSize: 11,fontFamily: "Montserrat",
-                               fontWeight: FontWeight.w500),),
-                         ],
-                       ),
-                     ),
+                        Container(
+                          margin: EdgeInsets.only(top: 15, bottom: 5),
+                          child:    Row(
+                            children: [
+                              Text("Cancellation Date :",style: TextStyle(color: Colors.grey,
+                                  fontSize: 11,fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),),
+                              SizedBox(width: 4,),
+                              Text(widget.cancellationDate == null ?"NA":widget.cancellationDate,style: TextStyle(color: Colors.black,fontSize: 11,fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w500),),
+                            ],
+                          ),
+                        ),
 
 
                         Container(
@@ -871,14 +871,14 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
                         Row(
                           children: [
-                           Container(
-                               width: MediaQuery.of(context).size.width * 0.80,
-                             child:  Text("Note : Refund amount will be credited in next 48 hours to your credit card",
-                               maxLines: 3,
-                               style: TextStyle(color: Colors.grey,
-                                 fontSize: 11,fontFamily: "Montserrat",
-                                 fontWeight: FontWeight.bold),),
-                           ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              child:  Text("Note : Refund amount will be credited in next 48 hours to your credit card",
+                                maxLines: 3,
+                                style: TextStyle(color: Colors.grey,
+                                    fontSize: 11,fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),),
+                            ),
                           ],
                         ),
                       ],
@@ -886,14 +886,14 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                   ),
 
                   widget.cancellationPost != "Cancelled"
-                 ? FlatButton(
+                      ? FlatButton(
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>CancellationPolicy()));
                     },
                     child: Text('Cancellation Policy',style: TextStyle(color: Color(0xff2196f3),fontSize: 12,fontFamily:'Montserrat' ),
                     ),
                   )
-                  :Container(
+                      :Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
                 ],
@@ -973,7 +973,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                           },
                           color: Colors.white,
                           shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue),
-                              borderRadius: BorderRadius.circular(10.0),),
+                            borderRadius: BorderRadius.circular(10.0),),
                           child: Text("Back"),
                         ),
                       ),
@@ -1152,7 +1152,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
     setState(() {});
   }
 
-   String deviceToken;
+  String deviceToken;
 
   Future<String> getDeviceToken() async {
 
@@ -1224,9 +1224,9 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
     String docId = widget.documnetId;
     String id =widget.id;
-   // print("docId== "+docId);
-  //  print("id== "+id);
-   // print("userid== "+ widget.userId);
+    // print("docId== "+docId);
+    //  print("id== "+id);
+    // print("userid== "+ widget.userId);
 
 
 
@@ -1245,20 +1245,20 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
       });
     }
     else
-      {
-        // froom my orders page
+    {
+      // froom my orders page
 
-         posting.CANCELBOOKINGFirestore2(widget.userId,docId,todaysDate).whenComplete(() {
-          posting.CancelMyOrderInfoInFirestore2(docId,widget.id,todaysDate).whenComplete(() {
-            _progressDialog.dismissProgressDialog(context);
-            progressDialog = false;
-            bookingOrderDateFilterList();
-            sendNotf("Bizitme",widget.title+" post is cancelled");
-            _ShowBottomSheet_success();
-          });
+      posting.CANCELBOOKINGFirestore2(widget.userId,docId,todaysDate).whenComplete(() {
+        posting.CancelMyOrderInfoInFirestore2(docId,widget.id,todaysDate).whenComplete(() {
+          _progressDialog.dismissProgressDialog(context);
+          progressDialog = false;
+          bookingOrderDateFilterList();
+          sendNotf("Bizitme",widget.title+" post is cancelled");
+          _ShowBottomSheet_success();
         });
+      });
 
-      }
+    }
 
 
 
@@ -1397,15 +1397,15 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                     margin: EdgeInsets.only(top: 10,left: 20,right: 20,bottom: 20),
                     child: MaterialButton(
                       onPressed: () {
-    if(from_mybooking==true)
-    {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyBookingPage(showCancleTab: "1",)));
-    }
-    else
-      {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>GuestHomePage(indexCount: '3')));
+                        if(from_mybooking==true)
+                        {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyBookingPage(showCancleTab: "1",)));
+                        }
+                        else
+                        {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>GuestHomePage(indexCount: '3')));
 
-      }
+                        }
 
                         setState(() {});
                         // Navigator.pushNamed(context, LoginPage.routeName);
