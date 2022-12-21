@@ -107,7 +107,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
   String showStartTime = "";
   String showEndTime  ="";
   String currentTime = "";
-  String hideCancelBtn = "0";
+  String hideCancelBtn = "1";
   TimeOfDay selectedTimeNew = TimeOfDay(hour: 00, minute: 00);
 
   double complete_rating = 1;
@@ -126,31 +126,38 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
   void
   sixHourValidation(){
-   String getHour = widget.compareTime.substring(0,2);
-   print("GET TWO LETTER : "+getHour);
+
+  {
+    String getHour = widget.compareTime.substring(0,2);
+    print("GET TWO LETTER : "+getHour);
 
     String getMinuite = widget.compareTime.substring(3,5);
+    String getAMPM = widget.compareTime.substring(5,8);
     print("GET TWO LETTER : "+getMinuite);
+    print("getAMPM : "+getAMPM);
 
-   String finalTime = formatDate(
-        DateTime(2020, 08, 1, int.parse(getHour)+1, int.parse(getMinuite)),
-        [hh, ':', nn, " ", am]).toString();
+
+
+    String finalTime = formatDate(
+        DateTime(2020, 08, 1, int.parse(getHour), int.parse(getMinuite)),
+        [hh, ':', nn, " ", getAMPM.trim()]).toString();
 
     print("FINAL TIME :"+finalTime);
 
 
-   var format = DateFormat("HH:mm a");
-   var one = format.parse(currentTime);
-   var two = format.parse(finalTime);
-   print("${two.difference(one)}");
+    var format = DateFormat("HH:mm a");
+    var one = format.parse(currentTime);
+    var two = format.parse(finalTime);
+    print("${two.difference(one)}");
 
-   if(one.isBefore(two)){
-     hideCancelBtn = "0";
-     setState(() {});
-   }else{
-     hideCancelBtn = "1";
-     setState(() {});
-   }
+    if(one.isBefore(two)){
+      hideCancelBtn = "1";
+      setState(() {});
+    }else{
+      hideCancelBtn = "0";
+      setState(() {});
+    }
+  }
 
     setState(() {});
   }
@@ -172,10 +179,7 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
 
     currentTime = DateFormat('hh:mm a').format(DateTime.now());
   //  print("TIME NOW : "+currentTime);
-   // String time = widget.compareTime;
-  /* if(time != null){
-     sixHourValidation();
-   }*/
+
 
     /// check for rating
     if( widget.bookingForStatus == "Hour")
@@ -212,7 +216,14 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
             _ShowDialog_rating(context);
           });
         }
+        hideCancelBtn = "0";
     }
+
+
+      if(curretnDate.isAtSameMomentAs(fromdDate)==true)
+      {
+        hideCancelBtn = "0";
+      }
 
   }
     else
@@ -245,7 +256,15 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
             _ShowDialog_rating(context);
           });
         }
+
+        hideCancelBtn = "0";
       }
+
+      if(curretnDate.isAtSameMomentAs(toDate)==true)
+      {
+        hideCancelBtn = "0";
+      }
+
     }
 
     // Future.delayed(Duration.zero, () async {
@@ -778,14 +797,14 @@ class _CancelBookingPageState extends State<CancelBookingPage> {
                     ),
 
                     onPressed: (){
-                      if(hideCancelBtn == "0"){
+                      if(hideCancelBtn == "1"){
                         _ShowBottomSheet_warningPage();
                       }
 
                     },
                     padding: EdgeInsets.symmetric(horizontal: 90,vertical: 10),
-                    color: hideCancelBtn == "0"?Color(0xff4996f3):Colors.grey,
-                    splashColor: hideCancelBtn == "0"?Color(0xff4996f3):Colors.grey,
+                    color: hideCancelBtn == "1"?Color(0xff4996f3):Colors.grey,
+                    splashColor: hideCancelBtn == "1"?Color(0xff4996f3):Colors.grey,
 
                     child: Text('Cancel Booking',style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: 'Montserrat'),),
                   )
