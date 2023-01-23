@@ -293,7 +293,8 @@ class _BankAccountPageState extends State<BankAccountPage> {
               backgroundColor: Colors.white,
               key: _scaffoldKey,
               body: DoubleBackToCloseApp(
-           /*  
+
+           /*
                 child: Container(
                   margin: const EdgeInsets.only(
                       top: 5, left: 5, right: 5, bottom: 5),

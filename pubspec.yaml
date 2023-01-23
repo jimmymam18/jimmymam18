@@ -132,6 +132,7 @@ flutter:
     - assets/Images/close_circle.png
     - assets/Images/submitfeedbackimg.png
     - assets/Images/rightarrow.png
+    - assets/Images/delete1.png
     - assets/audio/notification_sound.mp3
 
 

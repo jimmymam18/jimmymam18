@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:bizitme/Models/Bizitme.dart';
 import 'package:bizitme/Models/appConstants.dart';
+import 'package:bizitme/Models/custom_progress_dialog.dart';
 import 'package:bizitme/Screens/CancellationPolicy.dart';
 import 'package:bizitme/Screens/CancellationPolicyPage.dart';
 import 'package:bizitme/Screens/MainStartPage.dart';
@@ -11,11 +14,15 @@ import 'package:bizitme/Screens/UploadPhotosNext.dart';
 import 'package:bizitme/Screens/guestHomePage.dart';
 import 'package:bizitme/Screens/personalinfoPage.dart';
 import 'package:bizitme/SingleChat/UserChatlist.dart';
+import 'package:bizitme/Utils/Colors.dart';
 import 'package:bizitme/Utils/SHDF.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../global.dart';
+import 'global.dart';
 
 class ProfilePageClass extends StatefulWidget {
   @override
@@ -33,7 +40,7 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
   String name = "";
   String _imageUrl = "https://woceoeic";
   bool _checkLoaded = true;
-  var _loadImage = new AssetImage('assets/images/profile_default.png');
+  var _loadImage = new AssetImage('assets/Images/profile_default.png');
 
   @override
   void initState(){
@@ -336,6 +343,7 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                     ),
                   ),
                 ),
+
                 SizedBox(
                   height: 3,
                 ),
@@ -384,6 +392,55 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                 SizedBox(
                   height: 3,
                 ),
+
+
+                SizedBox(
+                  height: 3,
+                ),
+                RaisedButton(
+                  elevation: 0.2,
+                  onPressed: () {
+                    _Show_do_you_want_logout(context);
+                  },
+                  color: Colors.white,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    height: 45,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(
+                              'assets/Images/cancel_policy.png',
+                              height: 20,
+                              width: 20,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 12),
+                            ),
+                            Text('Delete Account',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500)),
+                          ],
+                        ),
+                        Image.asset(
+                          'assets/Images/arrow.png',
+                          height: 12,
+                          width: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+
+
+
                 RaisedButton(
                   elevation: 0.2,
                   onPressed: () {
@@ -428,6 +485,253 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
       ),
     );
   }
+
+
+
+  BuildContext dialog__customer_contact;
+
+  _Show_do_you_want_logout(BuildContext context) {
+    dialog__customer_contact = context;
+    return showDialog(
+        context: dialog__customer_contact,
+        barrierDismissible: false,
+        builder: (BuildContext dialog_context1) {
+          dialog__customer_contact = dialog_context1;
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.only(
+                      topRight: const Radius.circular(15.0),
+                      topLeft: const Radius.circular(15.0),
+                      bottomRight: const Radius.circular(15.0),
+                      bottomLeft: const Radius.circular(15.0))),
+              elevation: 0.0,
+              backgroundColor: Colors.white,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.80,
+                margin: EdgeInsets.only(left: 0.0, right: 0.0),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 45,
+                      padding: EdgeInsets.only(
+                        top: 0.0,
+                      ),
+                      margin: EdgeInsets.only(top: 0.0, right: 0.0),
+                      decoration: BoxDecoration(
+                          color: color_blue,
+                          shape: BoxShape.rectangle,
+                          borderRadius: new BorderRadius.only(
+                              topRight: const Radius.circular(15.0),
+                              topLeft: const Radius.circular(15.0),
+                              bottomRight: const Radius.circular(0.0),
+                              bottomLeft: const Radius.circular(0.0)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 0.0,
+                              offset: Offset(0.0, 0.0),
+                            ),
+                          ]),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Logout",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'EuclidCircularA-Bold',
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 60),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: new Image.asset(
+                                    "assets/Images/logout.png",
+                                    color: color_blue,
+                                    width: 45,
+                                    height: 45),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Are you sure you want to log out?",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'EuclidCircularA-Bold',
+                                      color: Colors.black),
+                                ),
+                              ],
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                    width: 85,
+                                    height: 30,
+                                    child: Container(
+                                      child: FlatButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(30)),
+                                        color: color_blue,
+                                        highlightColor: Colors.white,
+                                        splashColor:
+                                        Colors.white.withAlpha(100),
+                                        onPressed: () {
+                                          Navigator.of(dialog__customer_contact)
+                                              .pop(); // here I pop to avoid multiple Dialogs
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: <Widget>[
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "No",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    letterSpacing: 1,
+                                                    fontFamily:
+                                                    'EuclidCircularA-Bold',
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )),
+                                new SizedBox(
+                                  width: 30,
+                                ),
+                                Container(
+                                    width: 85,
+                                    height: 30,
+                                    child: Container(
+                                      child: FlatButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(30)),
+                                        color: color_blue,
+                                        highlightColor: Colors.white,
+                                        splashColor:
+                                        Colors.white.withAlpha(100),
+                                        onPressed: () {
+                                          Navigator.of(dialog__customer_contact)
+                                              .pop(); //
+
+                                          deleteAccount();
+
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: <Widget>[
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Yes",
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    letterSpacing: 1,
+                                                    fontFamily:
+                                                    'EuclidCircularA-Bold',
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+
+          ;
+        });
+  }
+
+
+  deleteAccount()  async {
+    ProgressDialog _progressDialog = ProgressDialog();
+    if (progressDialog == false) {
+      progressDialog = true;
+      _progressDialog.showProgressDialog(context, textToBeDisplayed: 'Please wait...', dismissAfter: Duration(seconds: 120));
+    }
+
+    String shd_email = await SHDFClass.readSharedPrefString(AppConstants.CustEmail, "");
+
+    QuerySnapshot userData = await FirebaseFirestore.instance
+        .collection('users')
+        .get();
+    try
+    {
+      userData.docs.forEach((document) {
+        Map<String, dynamic> values = document.data();
+        String email = values['email'];
+        // String respondentEmail = values['RespondentEmail'];
+        // String password = values['Password'];
+        email = checkNull(email);
+        print(email);
+
+        try
+        {
+          if ( email == shd_email  )
+          {
+            _progressDialog.dismissProgressDialog(context);
+            FirebaseFirestore.instance.collection("users").doc(document.id).update({'DeleteAccountStatus': "True"}).whenComplete(() async {
+
+              logout_call();
+
+            });
+          }
+        }
+        catch(e)
+        {
+          print(e);
+        }
+
+      }
+      );
+    }
+    catch(e)
+    {
+      print(e);
+
+    }
+  }
+
+
+
+
 
 
   //LOGOUT APP
@@ -530,15 +834,8 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                               bottom: MediaQuery.of(context).size.height * 0.01),
                           child:InkWell(
                             onTap: (){
-                              SHDFClass.saveSharedPrefValueString(AppConstants.UserId, null);
-                              Bizitme.saveSharedPrefValueString(AppConstants.CustEmail, null);
-                              Bizitme.saveSharedPrefValueString(AppConstants.StripeAccountLink, null);
-                              Bizitme.saveSharedPrefValueBoolean(AppConstants.Session, null);
-                              Bizitme.saveSharedPrefValueBoolean(AppConstants.UserId, null);
-                              Bizitme.saveSharedPrefValueBoolean(AppConstants.Token, null);
-                              Bizitme.saveSharedPrefValueBoolean(AppConstants.TokenUser, null);
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainStartPage()));
-                              setState(() {});
+
+                              logout_call();
                             },
                             child: Container(
                               padding: EdgeInsets.only(
@@ -622,6 +919,19 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
       });
 
     });
+    setState(() {});
+  }
+
+  void logout_call()
+  {
+    SHDFClass.saveSharedPrefValueString(AppConstants.UserId, null);
+    Bizitme.saveSharedPrefValueString(AppConstants.CustEmail, null);
+    Bizitme.saveSharedPrefValueString(AppConstants.StripeAccountLink, null);
+    Bizitme.saveSharedPrefValueBoolean(AppConstants.Session, null);
+    Bizitme.saveSharedPrefValueBoolean(AppConstants.UserId, null);
+    Bizitme.saveSharedPrefValueBoolean(AppConstants.Token, null);
+    Bizitme.saveSharedPrefValueBoolean(AppConstants.TokenUser, null);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainStartPage()));
     setState(() {});
   }
 
