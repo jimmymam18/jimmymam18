@@ -539,7 +539,7 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Logout",
+                            "Delete Account",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'EuclidCircularA-Bold',
@@ -560,7 +560,7 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                             children: [
                               Container(
                                 child: new Image.asset(
-                                    "assets/Images/logout.png",
+                                    "assets/Images/delete1.png",
                                     color: color_blue,
                                     width: 45,
                                     height: 45),
@@ -575,7 +575,7 @@ class _ProfilePageClassState extends State<ProfilePageClass> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Are you sure you want to log out?",
+                                  "Are you sure you want to delete account?",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'EuclidCircularA-Bold',
