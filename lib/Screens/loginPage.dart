@@ -505,8 +505,8 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         obscureText: true,
                                         validator: (text) {
-                                          if (text.length < 6) {
-                                            return 'Password must be at least 8 characters';
+                                          if (text.length < 4) {
+                                            return 'Password must be at least 4 characters';
                                           }
                                           return null;
                                         },

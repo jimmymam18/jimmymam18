@@ -413,34 +413,34 @@ class _SignUpPageState extends State<SignUpPage> {
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: TextFormField(
-                          cursorColor: Colors.grey,
-                          decoration: InputDecoration(
-                              labelText: 'Gender',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 14.0,
-                                color: Colors.grey,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              )),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 14.0,
-                          ),
-                          controller: _genderController,
-                          validator: (text) {
-                            if (text.isEmpty) {
-                              return "Please enter gender";
-                            }
-                            return null;
-                          },
-                          textCapitalization: TextCapitalization.words,
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10.0),
+                      //   child: TextFormField(
+                      //     cursorColor: Colors.grey,
+                      //     decoration: InputDecoration(
+                      //         labelText: 'Gender',
+                      //         labelStyle: TextStyle(
+                      //           fontFamily: 'Montserrat',
+                      //           fontSize: 14.0,
+                      //           color: Colors.grey,
+                      //         ),
+                      //         focusedBorder: UnderlineInputBorder(
+                      //           borderSide: BorderSide(color: Colors.grey),
+                      //         )),
+                      //     style: TextStyle(
+                      //       fontFamily: 'Montserrat',
+                      //       fontSize: 14.0,
+                      //     ),
+                      //     controller: _genderController,
+                      //     validator: (text) {
+                      //       if (text.isEmpty) {
+                      //         return "Please enter gender";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     textCapitalization: TextCapitalization.words,
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: TextFormField(

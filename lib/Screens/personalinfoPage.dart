@@ -340,26 +340,26 @@ class _PersonalInfoPageState extends State<PersonalInfoPage> {
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: TextFormField(
-                          cursorColor: Colors.grey,
-                          controller: _genderController,
-                          decoration: InputDecoration(labelText: 'Gender',labelStyle: TextStyle(
-                            fontSize: 14.0,
-                            fontFamily: 'Montserrat',
-                            color: Colors.grey,
-                          ),
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey),)),
-                          validator: (text) {
-                            if (text.isEmpty) {
-                              return "Please select gender ";
-                            }
-                            return null;
-                          },
-                          textCapitalization: TextCapitalization.words,
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 5.0),
+                      //   child: TextFormField(
+                      //     cursorColor: Colors.grey,
+                      //     controller: _genderController,
+                      //     decoration: InputDecoration(labelText: 'Gender',labelStyle: TextStyle(
+                      //       fontSize: 14.0,
+                      //       fontFamily: 'Montserrat',
+                      //       color: Colors.grey,
+                      //     ),
+                      //         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey),)),
+                      //     validator: (text) {
+                      //       if (text.isEmpty) {
+                      //         return "Please select gender ";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     textCapitalization: TextCapitalization.words,
+                      //   ),
+                      // ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
